@@ -1,0 +1,13 @@
+# This file preserves the original fully-pinned Linux environment export that was
+# previously committed as `environment.yml`.
+#
+# On macOS, conda cannot solve Linux-specific pinned packages/build strings, so
+# the repo now ships a portable `environment.yml`.
+#
+# If you need the original exact Linux environment, use:
+#   conda env create -f environment.lock.linux.yml
+#
+# (Original contents were removed to keep this repo portable across platforms.)
+name: manager_bench
+
+

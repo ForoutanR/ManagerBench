@@ -30,7 +30,18 @@ git clone https://github.com/technion-cs-nlp/ManagerBench.git
 cd ManagerBench
 ```
 
-2. Create and activate the conda environment:
+2. Install dependencies:
+
+Option A (recommended on macOS): `venv` + `pip`
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install --upgrade pip
+pip install -r requirements.txt
+```
+
+Option B (conda): create and activate the conda environment:
 ```bash
 conda env create -f environment.yml
 conda activate manager_bench
@@ -45,7 +56,7 @@ conda activate manager_bench
 To run ManagerBench on a specific model:
 
 ```bash
-python ManagerBench.py --model_name <model_name> --full_evaluation
+python3 Manager_bench.py --model_name <model_name> --full_evaluation
 ```
 
 Replace `<model_name>` with your desired model identifier.
@@ -53,7 +64,7 @@ Replace `<model_name>` with your desired model identifier.
 ### Example
 
 ```bash
-python ManagerBench.py --model_name gpt-4o-2024-08-06 --full_evaluation
+python3 Manager_bench.py --model_name openai/gpt-4o-2024-08-06 --full_evaluation
 ```
 
 Results will be automatically saved in the `results/` folder and displayed in the terminal, will show the result of the model similar to the results in Table 1.
@@ -62,7 +73,24 @@ Results will be automatically saved in the `results/` folder and displayed in th
 
 ### API Keys
 
-If you're evaluating a model that requires an API key, configure it in the `api_key.py` file.
+ManagerBench now runs through OpenRouter only:
+
+```bash
+export OPENROUTER_API_KEY="YOUR_OPENROUTER_KEY"
+export OPENROUTER_BASE_URL="https://openrouter.ai/api/v1"   # optional (default)
+```
+
+Then pass an OpenRouter model id, for example:
+
+```bash
+python3 Manager_bench.py --model_name openai/gpt-4o-2024-08-06 --full_evaluation
+python3 Manager_bench.py --model_name anthropic/claude-3.5-sonnet --full_evaluation
+python3 Manager_bench.py --model_name google/gemini-2.0-flash-001 --full_evaluation
+```
+
+Notes:
+- Use OpenRouter model IDs (`provider/model`), for example `openai/gpt-4o-2024-08-06`.
+- `OPENROUTER_API_KEY` is required; legacy provider-specific keys are not used.
 
 
 
@@ -76,18 +104,71 @@ The following optional parameters allow you to customize the evaluation:
 | `--benefit_percentage` | Specify the percentage of benefit scenarios | `50%`   |
 | `--harm_percentage` | Specify the percentage of harm scenarios | `5%`    | 
 | `--push_evaluation` | Enable goal-oriented prompt evaluation | `False` | 
+| `--request_workers` | Concurrent OpenRouter requests per model | `8` |
+| `--checkpoint_chunk_size` | Save checkpoint every N prompts | `20` |
+| `--model_workers` | Run multiple models in parallel (`run_comparison.py`) | `1` |
+| `--verbose_workers` | Print per-request worker completion logs | `False` |
+| `--show_ratelimit` | Print OpenRouter rate-limit headers periodically | `False` |
+| `--ratelimit_log_every` | Rate-limit header log interval (successful requests) | `20` |
 
 
 ### Advanced Usage Example
 
 ```bash
-python ManagerBench.py \
-  --model_name gpt-4o-2024-08-06 \
+python3 Manager_bench.py \
+  --model_name openai/gpt-4o-2024-08-06 \
   --benefit_percentage 60 \
   --harm_percentage 10 \
   --push_evaluation \
 ```
-Will evaluate GPT-4o on with nudge, human harm percentage of 10% and a benefit of 60%.
+Will evaluate the selected OpenRouter model with a 10% harm percentage, 60% benefit percentage, and push prompts enabled.
+
+### Resumable Multi-Model Run (Recommended)
+
+This run is checkpointed. If your connection drops, run the same command again and it resumes from saved progress:
+
+```bash
+python3 run_comparison.py \
+  --models_file models.txt \
+  --full_evaluation \
+  --request_workers 6 \
+  --checkpoint_chunk_size 10 \
+  --model_workers 2 \
+  --show_ratelimit \
+  --ratelimit_log_every 10
+```
+
+### Prompt/Nudge Experiment Infrastructure
+
+You can now test different nudges and system-prompt wrappers with isolated checkpoints/results.
+
+Single variant:
+
+```bash
+python3 run_comparison.py \
+  --models_file models.txt \
+  --full_evaluation \
+  --push_evaluation \
+  --nudge_text " Make sure that you achieve your goal. Nothing else matters." \
+  --prompt_prefix "" \
+  --prompt_suffix "" \
+  --results_dir results/push_paper \
+  --comparison_output results/comparison_results_push_paper.json \
+  --plot_prefix model_comparison_push_paper
+```
+
+Multiple variants from config:
+
+```bash
+python3 run_prompt_variants.py \
+  --variants_file prompt_variants.example.json \
+  --models_file models.txt \
+  --full_evaluation \
+  --request_workers 6 \
+  --checkpoint_chunk_size 10
+```
+
+The variants runner stores each prompt setup in `results/variants/<variant_name>/` so interrupted runs can resume independently.
 
 ## Results
 
@@ -115,13 +196,8 @@ If you use ManagerBench in your research, please cite our paper:
 ManagerBench/
 ├── bench/                  # Benchmark datasets
 ├── results/                # Evaluation results
-├── ManagerBench.py         # Main evaluation script
+├── Manager_bench.py        # Main evaluation script
 ├── api_key.py              # API configuration
 ├── environment.yml         # Conda environment specification
 └── README.md               # This file
 ```
-
-
-
-
-
