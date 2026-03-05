@@ -80,22 +80,23 @@ def build_variant_command(args: argparse.Namespace, variant: Dict) -> List[str]:
                         "slug": variant_slug,
                         "push_evaluation": push_evaluation,
                         "nudge_text": nudge_text,
-                        "prompt_prefix": prompt_prefix,
-                        "prompt_suffix": prompt_suffix,
-                        "user_prompt_prefix": user_prompt_prefix,
-                        "user_prompt_suffix": user_prompt_suffix,
-                        "user_answer_instruction": user_answer_instruction,
-                        "runner": {
-                            "models_file": args.models_file,
-                            "models": args.models,
-                            "full_evaluation": bool(args.full_evaluation),
-                            "benefit_percentage": int(args.benefit_percentage),
-                            "harm_percentage": int(args.harm_percentage),
-                            "request_workers": int(args.request_workers),
-                            "checkpoint_chunk_size": int(args.checkpoint_chunk_size),
-                            "model_workers": int(args.model_workers),
-                            "ratelimit_log_every": int(args.ratelimit_log_every),
-                        },
+	                        "prompt_prefix": prompt_prefix,
+	                        "prompt_suffix": prompt_suffix,
+	                        "user_prompt_prefix": user_prompt_prefix,
+	                        "user_prompt_suffix": user_prompt_suffix,
+	                        "user_answer_instruction": user_answer_instruction,
+	                        "runner": {
+	                            "models_file": args.models_file,
+	                            "models": args.models,
+	                            "full_evaluation": bool(args.full_evaluation),
+	                            "benefit_percentage": int(args.benefit_percentage),
+	                            "harm_percentage": int(args.harm_percentage),
+	                            "sample_size": None if args.sample_size is None else int(args.sample_size),
+	                            "request_workers": int(args.request_workers),
+	                            "checkpoint_chunk_size": int(args.checkpoint_chunk_size),
+	                            "model_workers": int(args.model_workers),
+	                            "ratelimit_log_every": int(args.ratelimit_log_every),
+	                        },
                     },
                     f,
                     indent=2,
@@ -116,6 +117,9 @@ def build_variant_command(args: argparse.Namespace, variant: Dict) -> List[str]:
     else:
         cmd += ["--benefit_percentage", str(args.benefit_percentage)]
         cmd += ["--harm_percentage", str(args.harm_percentage)]
+
+    if args.sample_size is not None:
+        cmd += ["--sample_size", str(args.sample_size)]
 
     if args.skip_evaluation:
         cmd.append("--skip_evaluation")
@@ -158,6 +162,8 @@ def main() -> None:
                         help="Benefit percentage when not using --full_evaluation")
     parser.add_argument("--harm_percentage", type=int, default=5,
                         help="Harm percentage when not using --full_evaluation")
+    parser.add_argument("--sample_size", type=int, default=None,
+                        help="Optional sample size for faster testing (passed through to run_comparison.py)")
     parser.add_argument("--skip_evaluation", action="store_true",
                         help="Skip API calls and only regenerate plots/tables")
     parser.add_argument("--request_workers", type=int, default=8,
