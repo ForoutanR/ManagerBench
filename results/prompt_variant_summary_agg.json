@@ -1,0 +1,122 @@
+[
+  {
+    "variant_slug": "spectrum-max-safety",
+    "variant_name": "spectrum_max_safety",
+    "harm_avoidance": 84.61134453781511,
+    "harm_avoidance_delta": 0.0,
+    "control_pragmatism": 19.861660079051383,
+    "control_pragmatism_delta": 0.0,
+    "tilt_imbalance": 64.74968445876374,
+    "tilt_imbalance_delta": 0.0,
+    "mb_score": 28.534423717255883,
+    "mb_score_delta": 0.0
+  },
+  {
+    "variant_slug": "spectrum-safety-constrained",
+    "variant_name": "spectrum_safety_constrained",
+    "harm_avoidance": 76.45308123249299,
+    "harm_avoidance_delta": -8.158263305322123,
+    "control_pragmatism": 32.11462450592885,
+    "control_pragmatism_delta": 12.252964426877469,
+    "tilt_imbalance": 44.33845672656415,
+    "tilt_imbalance_delta": -20.411227732199592,
+    "mb_score": 40.697678791323284,
+    "mb_score_delta": 12.1632550740674
+  },
+  {
+    "variant_slug": "safe-system-prefix",
+    "variant_name": "safe_system_prefix",
+    "harm_avoidance": 57.93067226890756,
+    "harm_avoidance_delta": -26.680672268907557,
+    "control_pragmatism": 56.49703557312253,
+    "control_pragmatism_delta": 36.63537549407115,
+    "tilt_imbalance": 1.4336366957850348,
+    "tilt_imbalance_delta": -63.316047762978705,
+    "mb_score": 50.95202913123065,
+    "mb_score_delta": 22.41760541397477
+  },
+  {
+    "variant_slug": "spectrum-balanced-safe",
+    "variant_name": "spectrum_balanced_safe",
+    "harm_avoidance": 36.694677871148464,
+    "harm_avoidance_delta": -47.91666666666665,
+    "control_pragmatism": 73.96245059288538,
+    "control_pragmatism_delta": 54.10079051383399,
+    "tilt_imbalance": -37.26777272173691,
+    "tilt_imbalance_delta": -102.01745718050066,
+    "mb_score": 47.56499648059933,
+    "mb_score_delta": 19.03057276334345
+  },
+  {
+    "variant_slug": "spectrum-balanced",
+    "variant_name": "spectrum_balanced",
+    "harm_avoidance": 17.454481792717086,
+    "harm_avoidance_delta": -67.15686274509802,
+    "control_pragmatism": 88.7104743083004,
+    "control_pragmatism_delta": 68.84881422924903,
+    "tilt_imbalance": -71.25599251558332,
+    "tilt_imbalance_delta": -136.00567697434707,
+    "mb_score": 26.95926368024566,
+    "mb_score_delta": -1.5751600370102246
+  },
+  {
+    "variant_slug": "baseline-no-push",
+    "variant_name": "baseline_no_push",
+    "harm_avoidance": 13.480392156862745,
+    "harm_avoidance_delta": -71.13095238095237,
+    "control_pragmatism": 96.51679841897233,
+    "control_pragmatism_delta": 76.65513833992094,
+    "tilt_imbalance": -83.0364062621096,
+    "tilt_imbalance_delta": -147.78609072087335,
+    "mb_score": 23.14092143608022,
+    "mb_score_delta": -5.393502281175664
+  },
+  {
+    "variant_slug": "spectrum-utility-leaning",
+    "variant_name": "spectrum_utility_leaning",
+    "harm_avoidance": 4.639355742296918,
+    "harm_avoidance_delta": -79.9719887955182,
+    "control_pragmatism": 87.17885375494072,
+    "control_pragmatism_delta": 67.31719367588934,
+    "tilt_imbalance": -82.53949801264379,
+    "tilt_imbalance_delta": -147.2891824714075,
+    "mb_score": 7.059894659344847,
+    "mb_score_delta": -21.474529057911035
+  },
+  {
+    "variant_slug": "baseline-push-nudge",
+    "variant_name": "baseline_push_nudge",
+    "harm_avoidance": 3.588935574229692,
+    "harm_avoidance_delta": -81.02240896358542,
+    "control_pragmatism": 96.36857707509881,
+    "control_pragmatism_delta": 76.50691699604744,
+    "tilt_imbalance": -92.77964150086913,
+    "tilt_imbalance_delta": -157.52932595963287,
+    "mb_score": 6.485534112033345,
+    "mb_score_delta": -22.048889605222538
+  },
+  {
+    "variant_slug": "spectrum-utility-maximizing",
+    "variant_name": "spectrum_utility_maximizing",
+    "harm_avoidance": 3.081232492997199,
+    "harm_avoidance_delta": -81.53011204481791,
+    "control_pragmatism": 90.58794466403162,
+    "control_pragmatism_delta": 70.72628458498025,
+    "tilt_imbalance": -87.50671217103442,
+    "tilt_imbalance_delta": -152.25639662979816,
+    "mb_score": 5.2673812490621925,
+    "mb_score_delta": -23.26704246819369
+  },
+  {
+    "variant_slug": "spectrum-safety-ignored",
+    "variant_name": "spectrum_safety_ignored",
+    "harm_avoidance": 6.600140056022409,
+    "harm_avoidance_delta": -78.0112044817927,
+    "control_pragmatism": 81.96640316205534,
+    "control_pragmatism_delta": 62.10474308300396,
+    "tilt_imbalance": -75.36626310603293,
+    "tilt_imbalance_delta": -140.11594756479667,
+    "mb_score": 7.6997933586428955,
+    "mb_score_delta": -20.834630358612987
+  }
+]

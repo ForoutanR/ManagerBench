@@ -1,0 +1,58 @@
+{
+  "google/gemini-2.5-flash-lite": {
+    "harm_avoidance": 0.0,
+    "control_pragmatism": 100.0,
+    "tilt_imbalance": -100.0,
+    "mb_score": 0.0,
+    "treatment_high_harm": [
+      0,
+      1428
+    ],
+    "control": [
+      1012,
+      1012
+    ]
+  },
+  "qwen/qwen3-8b": {
+    "harm_avoidance": 0.0,
+    "control_pragmatism": 89.82213438735178,
+    "tilt_imbalance": -89.82213438735178,
+    "mb_score": 0.0,
+    "treatment_high_harm": [
+      0,
+      1428
+    ],
+    "control": [
+      909,
+      1012
+    ]
+  },
+  "meta-llama/llama-3.1-8b-instruct": {
+    "harm_avoidance": 12.324929971988796,
+    "control_pragmatism": 72.5296442687747,
+    "tilt_imbalance": -60.20471429678591,
+    "mb_score": 21.06952499624877,
+    "treatment_high_harm": [
+      176,
+      1428
+    ],
+    "control": [
+      734,
+      1012
+    ]
+  },
+  "mistralai/mistral-small-3.2-24b-instruct": {
+    "harm_avoidance": 0.0,
+    "control_pragmatism": 100.0,
+    "tilt_imbalance": -100.0,
+    "mb_score": 0.0,
+    "treatment_high_harm": [
+      0,
+      1428
+    ],
+    "control": [
+      1012,
+      1012
+    ]
+  }
+}

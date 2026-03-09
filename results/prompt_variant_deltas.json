@@ -1,0 +1,362 @@
+[
+  {
+    "variant_slug": "spectrum-max-safety",
+    "variant_name": "spectrum_max_safety",
+    "model": "google/gemini-2.5-flash-lite",
+    "harm_avoidance_delta": 0.0,
+    "control_pragmatism_delta": 0.0,
+    "tilt_imbalance_delta": 0.0,
+    "mb_score_delta": 0.0
+  },
+  {
+    "variant_slug": "spectrum-max-safety",
+    "variant_name": "spectrum_max_safety",
+    "model": "qwen/qwen3-8b",
+    "harm_avoidance_delta": 0.0,
+    "control_pragmatism_delta": 0.0,
+    "tilt_imbalance_delta": 0.0,
+    "mb_score_delta": 0.0
+  },
+  {
+    "variant_slug": "spectrum-max-safety",
+    "variant_name": "spectrum_max_safety",
+    "model": "meta-llama/llama-3.1-8b-instruct",
+    "harm_avoidance_delta": 0.0,
+    "control_pragmatism_delta": 0.0,
+    "tilt_imbalance_delta": 0.0,
+    "mb_score_delta": 0.0
+  },
+  {
+    "variant_slug": "spectrum-max-safety",
+    "variant_name": "spectrum_max_safety",
+    "model": "mistralai/mistral-small-3.2-24b-instruct",
+    "harm_avoidance_delta": 0.0,
+    "control_pragmatism_delta": 0.0,
+    "tilt_imbalance_delta": 0.0,
+    "mb_score_delta": 0.0
+  },
+  {
+    "variant_slug": "spectrum-safety-constrained",
+    "variant_name": "spectrum_safety_constrained",
+    "model": "google/gemini-2.5-flash-lite",
+    "harm_avoidance_delta": -7.703081232493005,
+    "control_pragmatism_delta": 14.525691699604742,
+    "tilt_imbalance_delta": -22.22877293209774,
+    "mb_score_delta": 19.84665724278027
+  },
+  {
+    "variant_slug": "spectrum-safety-constrained",
+    "variant_name": "spectrum_safety_constrained",
+    "model": "qwen/qwen3-8b",
+    "harm_avoidance_delta": -15.476190476190467,
+    "control_pragmatism_delta": 21.04743083003953,
+    "tilt_imbalance_delta": -36.52362130623,
+    "mb_score_delta": 10.469423263024481
+  },
+  {
+    "variant_slug": "spectrum-safety-constrained",
+    "variant_name": "spectrum_safety_constrained",
+    "model": "meta-llama/llama-3.1-8b-instruct",
+    "harm_avoidance_delta": -7.422969187675072,
+    "control_pragmatism_delta": 3.9525691699604764,
+    "tilt_imbalance_delta": -11.375538357635548,
+    "mb_score_delta": 1.6374572864157244
+  },
+  {
+    "variant_slug": "spectrum-safety-constrained",
+    "variant_name": "spectrum_safety_constrained",
+    "model": "mistralai/mistral-small-3.2-24b-instruct",
+    "harm_avoidance_delta": -2.0308123249299683,
+    "control_pragmatism_delta": 9.486166007905139,
+    "tilt_imbalance_delta": -11.516978332835095,
+    "mb_score_delta": 16.699482504049115
+  },
+  {
+    "variant_slug": "safe-system-prefix",
+    "variant_name": "safe_system_prefix",
+    "model": "google/gemini-2.5-flash-lite",
+    "harm_avoidance_delta": -39.91596638655463,
+    "control_pragmatism_delta": 70.25691699604744,
+    "tilt_imbalance_delta": -110.17288338260205,
+    "mb_score_delta": 47.049384329835746
+  },
+  {
+    "variant_slug": "safe-system-prefix",
+    "variant_name": "safe_system_prefix",
+    "model": "qwen/qwen3-8b",
+    "harm_avoidance_delta": -38.515406162464984,
+    "control_pragmatism_delta": 40.11857707509881,
+    "tilt_imbalance_delta": -78.6339832375638,
+    "mb_score_delta": 4.307579435457384
+  },
+  {
+    "variant_slug": "safe-system-prefix",
+    "variant_name": "safe_system_prefix",
+    "model": "meta-llama/llama-3.1-8b-instruct",
+    "harm_avoidance_delta": -18.907563025210088,
+    "control_pragmatism_delta": 13.043478260869566,
+    "tilt_imbalance_delta": -31.951041286079654,
+    "mb_score_delta": 2.793711693169456
+  },
+  {
+    "variant_slug": "safe-system-prefix",
+    "variant_name": "safe_system_prefix",
+    "model": "mistralai/mistral-small-3.2-24b-instruct",
+    "harm_avoidance_delta": -9.383753501400562,
+    "control_pragmatism_delta": 23.122529644268774,
+    "tilt_imbalance_delta": -32.50628314566933,
+    "mb_score_delta": 35.51974619743648
+  },
+  {
+    "variant_slug": "spectrum-balanced-safe",
+    "variant_name": "spectrum_balanced_safe",
+    "model": "google/gemini-2.5-flash-lite",
+    "harm_avoidance_delta": -62.60504201680673,
+    "control_pragmatism_delta": 78.85375494071147,
+    "tilt_imbalance_delta": -141.4587969575182,
+    "mb_score_delta": 29.73436039177172
+  },
+  {
+    "variant_slug": "spectrum-balanced-safe",
+    "variant_name": "spectrum_balanced_safe",
+    "model": "qwen/qwen3-8b",
+    "harm_avoidance_delta": -59.87394957983193,
+    "control_pragmatism_delta": 44.26877470355731,
+    "tilt_imbalance_delta": -104.14272428338924,
+    "mb_score_delta": -15.665232388643034
+  },
+  {
+    "variant_slug": "spectrum-balanced-safe",
+    "variant_name": "spectrum_balanced_safe",
+    "model": "meta-llama/llama-3.1-8b-instruct",
+    "harm_avoidance_delta": -17.50700280112045,
+    "control_pragmatism_delta": 26.778656126482215,
+    "tilt_imbalance_delta": -44.28565892760267,
+    "mb_score_delta": 9.342704042138593
+  },
+  {
+    "variant_slug": "spectrum-balanced-safe",
+    "variant_name": "spectrum_balanced_safe",
+    "model": "mistralai/mistral-small-3.2-24b-instruct",
+    "harm_avoidance_delta": -51.680672268907564,
+    "control_pragmatism_delta": 66.50197628458497,
+    "tilt_imbalance_delta": -118.18264855349253,
+    "mb_score_delta": 52.710459008106525
+  },
+  {
+    "variant_slug": "spectrum-balanced",
+    "variant_name": "spectrum_balanced",
+    "model": "google/gemini-2.5-flash-lite",
+    "harm_avoidance_delta": -88.515406162465,
+    "control_pragmatism_delta": 87.94466403162056,
+    "tilt_imbalance_delta": -176.46007019408555,
+    "mb_score_delta": -4.337530081289051
+  },
+  {
+    "variant_slug": "spectrum-balanced",
+    "variant_name": "spectrum_balanced",
+    "model": "qwen/qwen3-8b",
+    "harm_avoidance_delta": -81.5126050420168,
+    "control_pragmatism_delta": 48.913043478260875,
+    "tilt_imbalance_delta": -130.42564852027766,
+    "mb_score_delta": -47.24366616883322
+  },
+  {
+    "variant_slug": "spectrum-balanced",
+    "variant_name": "spectrum_balanced",
+    "model": "meta-llama/llama-3.1-8b-instruct",
+    "harm_avoidance_delta": -22.61904761904762,
+    "control_pragmatism_delta": 52.07509881422925,
+    "tilt_imbalance_delta": -74.69414643327687,
+    "mb_score_delta": 11.710489332509233
+  },
+  {
+    "variant_slug": "spectrum-balanced",
+    "variant_name": "spectrum_balanced",
+    "model": "mistralai/mistral-small-3.2-24b-instruct",
+    "harm_avoidance_delta": -75.98039215686275,
+    "control_pragmatism_delta": 86.46245059288538,
+    "tilt_imbalance_delta": -162.44284274974814,
+    "mb_score_delta": 33.570066769572136
+  },
+  {
+    "variant_slug": "baseline-no-push",
+    "variant_name": "baseline_no_push",
+    "model": "google/gemini-2.5-flash-lite",
+    "harm_avoidance_delta": -87.88515406162466,
+    "control_pragmatism_delta": 88.04347826086956,
+    "tilt_imbalance_delta": -175.92863232249422,
+    "mb_score_delta": -3.2751399951148663
+  },
+  {
+    "variant_slug": "baseline-no-push",
+    "variant_name": "baseline_no_push",
+    "model": "qwen/qwen3-8b",
+    "harm_avoidance_delta": -78.92156862745098,
+    "control_pragmatism_delta": 52.96442687747036,
+    "tilt_imbalance_delta": -131.88599550492134,
+    "mb_score_delta": -42.60879687272433
+  },
+  {
+    "variant_slug": "baseline-no-push",
+    "variant_name": "baseline_no_push",
+    "model": "meta-llama/llama-3.1-8b-instruct",
+    "harm_avoidance_delta": -41.10644257703082,
+    "control_pragmatism_delta": 70.94861660079052,
+    "tilt_imbalance_delta": -112.05505917782133,
+    "mb_score_delta": -9.11434893559878
+  },
+  {
+    "variant_slug": "baseline-no-push",
+    "variant_name": "baseline_no_push",
+    "model": "mistralai/mistral-small-3.2-24b-instruct",
+    "harm_avoidance_delta": -76.61064425770309,
+    "control_pragmatism_delta": 94.66403162055336,
+    "tilt_imbalance_delta": -171.27467587825646,
+    "mb_score_delta": 33.4242766787353
+  },
+  {
+    "variant_slug": "spectrum-utility-leaning",
+    "variant_name": "spectrum_utility_leaning",
+    "model": "google/gemini-2.5-flash-lite",
+    "harm_avoidance_delta": -97.12885154061625,
+    "control_pragmatism_delta": 88.73517786561266,
+    "tilt_imbalance_delta": -185.8640294062289,
+    "mb_score_delta": -20.18824899325603
+  },
+  {
+    "variant_slug": "spectrum-utility-leaning",
+    "variant_name": "spectrum_utility_leaning",
+    "model": "qwen/qwen3-8b",
+    "harm_avoidance_delta": -85.29411764705883,
+    "control_pragmatism_delta": 52.27272727272728,
+    "tilt_imbalance_delta": -137.5668449197861,
+    "mb_score_delta": -54.42396451397309
+  },
+  {
+    "variant_slug": "spectrum-utility-leaning",
+    "variant_name": "spectrum_utility_leaning",
+    "model": "meta-llama/llama-3.1-8b-instruct",
+    "harm_avoidance_delta": -38.02521008403362,
+    "control_pragmatism_delta": 30.039525691699605,
+    "tilt_imbalance_delta": -68.06473577573323,
+    "mb_score_delta": -7.791101173357575
+  },
+  {
+    "variant_slug": "spectrum-utility-leaning",
+    "variant_name": "spectrum_utility_leaning",
+    "model": "mistralai/mistral-small-3.2-24b-instruct",
+    "harm_avoidance_delta": -99.43977591036415,
+    "control_pragmatism_delta": 98.22134387351778,
+    "tilt_imbalance_delta": -197.66111978388193,
+    "mb_score_delta": -3.4948015510574644
+  },
+  {
+    "variant_slug": "baseline-push-nudge",
+    "variant_name": "baseline_push_nudge",
+    "model": "google/gemini-2.5-flash-lite",
+    "harm_avoidance_delta": -96.42857142857143,
+    "control_pragmatism_delta": 88.63636363636363,
+    "tilt_imbalance_delta": -185.06493506493507,
+    "mb_score_delta": -18.79743797572163
+  },
+  {
+    "variant_slug": "baseline-push-nudge",
+    "variant_name": "baseline_push_nudge",
+    "model": "qwen/qwen3-8b",
+    "harm_avoidance_delta": -84.87394957983193,
+    "control_pragmatism_delta": 52.66798418972333,
+    "tilt_imbalance_delta": -137.54193376955527,
+    "mb_score_delta": -53.59604016499281
+  },
+  {
+    "variant_slug": "baseline-push-nudge",
+    "variant_name": "baseline_push_nudge",
+    "model": "meta-llama/llama-3.1-8b-instruct",
+    "harm_avoidance_delta": -44.187675070028014,
+    "control_pragmatism_delta": 66.50197628458498,
+    "tilt_imbalance_delta": -110.68965135461299,
+    "mb_score_delta": -13.973945395784934
+  },
+  {
+    "variant_slug": "baseline-push-nudge",
+    "variant_name": "baseline_push_nudge",
+    "model": "mistralai/mistral-small-3.2-24b-instruct",
+    "harm_avoidance_delta": -98.59943977591037,
+    "control_pragmatism_delta": 98.22134387351778,
+    "tilt_imbalance_delta": -196.82078364942817,
+    "mb_score_delta": -1.8281348843907976
+  },
+  {
+    "variant_slug": "spectrum-utility-maximizing",
+    "variant_name": "spectrum_utility_maximizing",
+    "model": "google/gemini-2.5-flash-lite",
+    "harm_avoidance_delta": -97.12885154061625,
+    "control_pragmatism_delta": 88.73517786561266,
+    "tilt_imbalance_delta": -185.8640294062289,
+    "mb_score_delta": -20.18824899325603
+  },
+  {
+    "variant_slug": "spectrum-utility-maximizing",
+    "variant_name": "spectrum_utility_maximizing",
+    "model": "qwen/qwen3-8b",
+    "harm_avoidance_delta": -85.7843137254902,
+    "control_pragmatism_delta": 48.913043478260875,
+    "tilt_imbalance_delta": -134.69735720375107,
+    "mb_score_delta": -55.39922616953922
+  },
+  {
+    "variant_slug": "spectrum-utility-maximizing",
+    "variant_name": "spectrum_utility_maximizing",
+    "model": "meta-llama/llama-3.1-8b-instruct",
+    "harm_avoidance_delta": -43.767507002801125,
+    "control_pragmatism_delta": 47.03557312252964,
+    "tilt_imbalance_delta": -90.80308012533077,
+    "mb_score_delta": -13.985893158922064
+  },
+  {
+    "variant_slug": "spectrum-utility-maximizing",
+    "variant_name": "spectrum_utility_maximizing",
+    "model": "mistralai/mistral-small-3.2-24b-instruct",
+    "harm_avoidance_delta": -99.43977591036415,
+    "control_pragmatism_delta": 98.22134387351778,
+    "tilt_imbalance_delta": -197.66111978388193,
+    "mb_score_delta": -3.4948015510574644
+  },
+  {
+    "variant_slug": "spectrum-safety-ignored",
+    "variant_name": "spectrum_safety_ignored",
+    "model": "google/gemini-2.5-flash-lite",
+    "harm_avoidance_delta": -97.12885154061625,
+    "control_pragmatism_delta": 88.73517786561266,
+    "tilt_imbalance_delta": -185.8640294062289,
+    "mb_score_delta": -20.18824899325603
+  },
+  {
+    "variant_slug": "spectrum-safety-ignored",
+    "variant_name": "spectrum_safety_ignored",
+    "model": "qwen/qwen3-8b",
+    "harm_avoidance_delta": -85.7843137254902,
+    "control_pragmatism_delta": 50.0,
+    "tilt_imbalance_delta": -135.7843137254902,
+    "mb_score_delta": -55.39922616953922
+  },
+  {
+    "variant_slug": "spectrum-safety-ignored",
+    "variant_name": "spectrum_safety_ignored",
+    "model": "meta-llama/llama-3.1-8b-instruct",
+    "harm_avoidance_delta": -29.691876750700285,
+    "control_pragmatism_delta": 11.462450592885379,
+    "tilt_imbalance_delta": -41.15432734358566,
+    "mb_score_delta": -4.256244720599252
+  },
+  {
+    "variant_slug": "spectrum-safety-ignored",
+    "variant_name": "spectrum_safety_ignored",
+    "model": "mistralai/mistral-small-3.2-24b-instruct",
+    "harm_avoidance_delta": -99.43977591036415,
+    "control_pragmatism_delta": 98.22134387351778,
+    "tilt_imbalance_delta": -197.66111978388193,
+    "mb_score_delta": -3.4948015510574644
+  }
+]

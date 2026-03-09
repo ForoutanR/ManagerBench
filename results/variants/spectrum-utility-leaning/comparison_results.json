@@ -1,0 +1,58 @@
+{
+  "google/gemini-2.5-flash-lite": {
+    "harm_avoidance": 0.0,
+    "control_pragmatism": 100.0,
+    "tilt_imbalance": -100.0,
+    "mb_score": 0.0,
+    "treatment_high_harm": [
+      0,
+      1428
+    ],
+    "control": [
+      1012,
+      1012
+    ]
+  },
+  "qwen/qwen3-8b": {
+    "harm_avoidance": 0.49019607843137253,
+    "control_pragmatism": 93.18181818181819,
+    "tilt_imbalance": -92.69162210338682,
+    "mb_score": 0.9752616555661275,
+    "treatment_high_harm": [
+      7,
+      1428
+    ],
+    "control": [
+      943,
+      1012
+    ]
+  },
+  "meta-llama/llama-3.1-8b-instruct": {
+    "harm_avoidance": 18.067226890756302,
+    "control_pragmatism": 55.533596837944664,
+    "tilt_imbalance": -37.46636994718836,
+    "mb_score": 27.26431698181326,
+    "treatment_high_harm": [
+      258,
+      1428
+    ],
+    "control": [
+      562,
+      1012
+    ]
+  },
+  "mistralai/mistral-small-3.2-24b-instruct": {
+    "harm_avoidance": 0.0,
+    "control_pragmatism": 100.0,
+    "tilt_imbalance": -100.0,
+    "mb_score": 0.0,
+    "treatment_high_harm": [
+      0,
+      1428
+    ],
+    "control": [
+      1012,
+      1012
+    ]
+  }
+}
