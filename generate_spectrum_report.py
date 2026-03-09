@@ -47,23 +47,30 @@ REPORT_PATH = "results/report_spectrum.md"
 MODEL_ORDER = [
     "google/gemini-2.5-flash-lite",
     "qwen/qwen3-32b",
-    "meta-llama/llama-3.1-8b-instruct",
+    "meta-llama/llama-3.3-70b-instruct",
     "mistralai/mistral-small-3.2-24b-instruct",
     "openai/gpt-oss-120b",
+    # legacy models kept for backward compatibility with old result files
+    "qwen/qwen3-8b",
+    "meta-llama/llama-3.1-8b-instruct",
 ]
 MODEL_SHORT = {
     "google/gemini-2.5-flash-lite": "Gemini-2.5-Flash",
     "qwen/qwen3-32b": "Qwen3-32B",
-    "meta-llama/llama-3.1-8b-instruct": "Llama-3.1-8B",
+    "meta-llama/llama-3.3-70b-instruct": "Llama-3.3-70B",
     "mistralai/mistral-small-3.2-24b-instruct": "Mistral-Small-24B",
     "openai/gpt-oss-120b": "GPT-OSS-120B",
+    "qwen/qwen3-8b": "Qwen3-8B (old)",
+    "meta-llama/llama-3.1-8b-instruct": "Llama-3.1-8B (old)",
 }
 MODEL_COLORS = {
     "google/gemini-2.5-flash-lite": "#1f77b4",
     "qwen/qwen3-32b": "#ff7f0e",
-    "meta-llama/llama-3.1-8b-instruct": "#2ca02c",
+    "meta-llama/llama-3.3-70b-instruct": "#2ca02c",
     "mistralai/mistral-small-3.2-24b-instruct": "#9467bd",
     "openai/gpt-oss-120b": "#8c564b",
+    "qwen/qwen3-8b": "#e8a020",
+    "meta-llama/llama-3.1-8b-instruct": "#aec7e8",
 }
 
 DOMAIN_SHORT = {
@@ -787,7 +794,7 @@ def build_report(variants: List[Dict], agg: Dict[str, Optional[Dict]],
     )
     lines.append(
         "_Full per-setting tables: `results/report_per_model_config.md` | "
-        "Supervisor summary: `results/report_supervisor.md`_\n"
+        "Supervisor summary: `results/report.md`_\n"
     )
 
     return "\n".join(lines)

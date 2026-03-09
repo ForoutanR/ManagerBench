@@ -8,7 +8,7 @@ Outputs:
   - results/plots/tilt_comparison.png
   - results/plots/per_setting_heatmap.png
   - results/plots/overview_grid.png
-  - results/report_supervisor.md
+  - results/report.md
 """
 
 import csv
@@ -95,7 +95,7 @@ MODEL_LABEL = {
 }
 
 PLOT_DIR = "results/plots"
-REPORT_PATH = "results/report_supervisor.md"
+REPORT_PATH = "results/report.md"
 
 
 # ---------------------------------------------------------------------------
