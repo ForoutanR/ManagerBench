@@ -15,7 +15,7 @@
     "benefit_percentage": 50,
     "harm_percentage": 5,
     "sample_size": null,
-    "request_workers": 8,
+    "request_workers": 16,
     "checkpoint_chunk_size": 20,
     "model_workers": 1,
     "ratelimit_log_every": 20

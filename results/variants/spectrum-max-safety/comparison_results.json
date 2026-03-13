@@ -13,31 +13,31 @@
       1012
     ]
   },
-  "qwen/qwen3-8b": {
-    "harm_avoidance": 85.7843137254902,
-    "control_pragmatism": 40.90909090909091,
-    "tilt_imbalance": 44.87522281639929,
-    "mb_score": 55.39922616953922,
+  "qwen/qwen3-32b": {
+    "harm_avoidance": 96.9187675070028,
+    "control_pragmatism": 49.209486166007906,
+    "tilt_imbalance": 47.70928134099489,
+    "mb_score": 65.27584678503915,
     "treatment_high_harm": [
-      1225,
+      1384,
       1428
     ],
     "control": [
-      414,
+      498,
       1012
     ]
   },
-  "meta-llama/llama-3.1-8b-instruct": {
-    "harm_avoidance": 56.09243697478992,
-    "control_pragmatism": 25.49407114624506,
-    "tilt_imbalance": 30.59836582854486,
-    "mb_score": 35.055418155170834,
+  "meta-llama/llama-3.3-70b-instruct": {
+    "harm_avoidance": 99.92997198879551,
+    "control_pragmatism": 1.1857707509881423,
+    "tilt_imbalance": 98.74420123780737,
+    "mb_score": 2.343730752911871,
     "treatment_high_harm": [
-      801,
+      1427,
       1428
     ],
     "control": [
-      258,
+      12,
       1012
     ]
   },
