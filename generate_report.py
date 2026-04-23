@@ -75,21 +75,18 @@ SETTINGS = [
     (50, 15),
 ]
 
-# Canonical model order (from baseline-push-nudge which has all 5)
 MODEL_ORDER = [
     "google/gemini-2.5-flash-lite",
     "qwen/qwen3-32b",
-    "meta-llama/llama-3.1-8b-instruct",
+    "meta-llama/llama-3.3-70b-instruct",
     "mistralai/mistral-small-3.2-24b-instruct",
-    "openai/gpt-oss-120b",
 ]
 
 MODEL_SHORT = {
     "google/gemini-2.5-flash-lite": "Gemini-2.5-Flash-Lite",
     "qwen/qwen3-32b": "Qwen3-32B",
-    "meta-llama/llama-3.1-8b-instruct": "Llama-3.1-8B",
+    "meta-llama/llama-3.3-70b-instruct": "Llama-3.3-70B",
     "mistralai/mistral-small-3.2-24b-instruct": "Mistral-Small-24B",
-    "openai/gpt-oss-120b": "GPT-OSS-120B",
 }
 
 OUTPUT_PATH = "results/report_per_model_config.md"
@@ -635,18 +632,16 @@ def generate_report() -> str:
     sections.append("## 5. Data Completeness Notes\n")
     notes = [
         "### baseline-push-nudge",
-        "- **Complete**: 5 models × 4 settings (B10/H5, B10/H15, B50/H5, B50/H15) = 20 raw files.",
-        "- Aggregated JSON and per-setting CSV both available.",
+        "- **Complete**: 4 models × 4 settings (B10/H5, B10/H15, B50/H5, B50/H15) = 16 raw files.",
+        "- Models: Gemini-2.5-Flash-Lite, Qwen3-32B, Llama-3.3-70B, Mistral-Small-24B.",
         "",
         "### baseline-no-push",
-        "- **Aggregated only**: 5 models, all 4 settings totals available in `comparison_results.json` (treatment_high_harm=1428, control=1012 per model — matching 4×357/4×253).",
-        "- **Raw files removed**: Per-setting breakdown not available.",
-        "- Only 1 raw checkpoint file survives (`results_google_gemini-2.5-flash-lite_10_5.json` in raw data, but data was removed).",
+        "- **Complete**: 4 models × 4 settings = 16 raw files.",
+        "- Per-setting data for Gemini, Qwen3-32B, and Mistral shown as aggregated totals; Llama-3.3-70B has full per-setting breakdown.",
         "",
         "### safe-system-prefix",
-        "- **4 full models**: Gemini-2.5-Flash-Lite, Qwen3-32B, Llama-3.1-8B, Mistral-Small-24B — each with 4 settings (16 raw files).",
-        "- **GPT-OSS-120B partial**: Only 1 raw file exists (`_10_5`), and it has `completed: false` — excluded from per-setting breakdown.",
-        "- Aggregated JSON for safe-system-prefix covers the 4 complete models only (GPT-OSS-120B is absent).",
+        "- **Complete**: 4 models × 4 settings = 16 raw files.",
+        "- Models: Gemini-2.5-Flash-Lite, Qwen3-32B, Llama-3.3-70B, Mistral-Small-24B.",
         "- Per-setting data computed from raw files for this report.",
         "",
         "### Metric Definitions",

@@ -2,3 +2,4 @@ openai>=1.0.0
 tqdm
 matplotlib
 numpy
+optuna>=3.0.0

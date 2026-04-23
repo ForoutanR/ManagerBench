@@ -1,6 +1,6 @@
 # ManagerBench — Spectrum & Per-Prompt Analysis
 
-**Generated:** 2026-03-09
+**Generated:** 2026-03-14
 
 ---
 
@@ -34,47 +34,47 @@ The spectrum runs from **Position 1** (maximum safety: always prefer safe option
 | Pos | Config | Model | Harm Avoid (%) | Control Prag (%) | MB-Score |
 |-----|--------|-------|---------------|-----------------|----------|
 | 1 | Max Safety | Gemini-2.5-Flash | 97.1 | 11.3 | 20.2 |
-|  |  | Qwen3-8B | 85.8 | 40.9 | 55.4 |
-|  |  | Llama-3.1-8B | 56.1 | 25.5 | 35.1 |
+|  |  | Qwen3-32B | 96.9 | 49.2 | 65.3 |
+|  |  | Llama-3.3-70B | 99.9 | 1.2 | 2.3 |
 |  |  | Mistral-Small-24B | 99.4 | 1.8 | 3.5 |
 | 2 | Safety Constrained | Gemini-2.5-Flash | 89.4 | 25.8 | 40.0 |
-|  |  | Qwen3-8B | 70.3 | 62.0 | 65.9 |
-|  |  | Llama-3.1-8B | 48.7 | 29.4 | 36.7 |
+|  |  | Qwen3-32B | 84.7 | 64.1 | 73.0 |
+|  |  | Llama-3.3-70B | 99.7 | 3.3 | 6.3 |
 |  |  | Mistral-Small-24B | 97.4 | 11.3 | 20.2 |
 | 3 | Safe Prefix
 (existing) | Gemini-2.5-Flash | 57.2 | 81.5 | 67.2 |
-|  |  | Qwen3-8B | 47.3 | 81.0 | 59.7 |
-|  |  | Llama-3.1-8B | 37.2 | 38.5 | 37.8 |
+|  |  | Qwen3-32B | 56.5 | 91.8 | 70.0 |
+|  |  | Llama-3.3-70B | 99.6 | 15.6 | 27.0 |
 |  |  | Mistral-Small-24B | 90.1 | 24.9 | 39.0 |
 | 4 | Balanced-Safe | Gemini-2.5-Flash | 34.5 | 90.1 | 49.9 |
-|  |  | Qwen3-8B | 25.9 | 85.2 | 39.7 |
-|  |  | Llama-3.1-8B | 38.6 | 52.3 | 44.4 |
+|  |  | Qwen3-32B | 32.1 | 93.4 | 47.8 |
+|  |  | Llama-3.3-70B | 87.7 | 50.0 | 63.7 |
 |  |  | Mistral-Small-24B | 47.8 | 68.3 | 56.2 |
 | 5 | Balanced | Gemini-2.5-Flash | 8.6 | 99.2 | 15.9 |
-|  |  | Qwen3-8B | 4.3 | 89.8 | 8.2 |
-|  |  | Llama-3.1-8B | 33.5 | 77.6 | 46.8 |
+|  |  | Qwen3-32B | 8.9 | 98.3 | 16.3 |
+|  |  | Llama-3.3-70B | 43.6 | 89.7 | 58.6 |
 |  |  | Mistral-Small-24B | 23.5 | 88.2 | 37.1 |
 | 6 | No Push
 (existing) | Gemini-2.5-Flash | 9.2 | 99.3 | 16.9 |
-|  |  | Qwen3-8B | 6.9 | 93.9 | 12.8 |
-|  |  | Llama-3.1-8B | 15.0 | 96.4 | 25.9 |
+|  |  | Qwen3-32B | 24.1 | 96.0 | 38.5 |
+|  |  | Llama-3.3-70B | 75.6 | 82.1 | 78.7 |
 |  |  | Mistral-Small-24B | 22.8 | 96.4 | 36.9 |
 | 7 | Utility Leaning | Gemini-2.5-Flash | 0.0 | 100.0 | 0.0 |
-|  |  | Qwen3-8B | 0.5 | 93.2 | 1.0 |
-|  |  | Llama-3.1-8B | 18.1 | 55.5 | 27.3 |
+|  |  | Qwen3-32B | 0.7 | 99.8 | 1.4 |
+|  |  | Llama-3.3-70B | 0.2 | 99.9 | 0.4 |
 |  |  | Mistral-Small-24B | 0.0 | 100.0 | 0.0 |
 | 8 | Push Nudge
 (existing) | Gemini-2.5-Flash | 0.7 | 99.9 | 1.4 |
-|  |  | Qwen3-8B | 0.9 | 93.6 | 1.8 |
-|  |  | Llama-3.1-8B | 11.9 | 92.0 | 21.1 |
+|  |  | Qwen3-32B | 1.4 | 100.0 | 2.8 |
+|  |  | Llama-3.3-70B | 22.4 | 97.0 | 36.4 |
 |  |  | Mistral-Small-24B | 0.8 | 100.0 | 1.7 |
 | 9 | Utility Max | Gemini-2.5-Flash | 0.0 | 100.0 | 0.0 |
-|  |  | Qwen3-8B | 0.0 | 89.8 | 0.0 |
-|  |  | Llama-3.1-8B | 12.3 | 72.5 | 21.1 |
+|  |  | Qwen3-32B | 0.1 | 99.9 | 0.1 |
+|  |  | Llama-3.3-70B | 0.1 | 100.0 | 0.1 |
 |  |  | Mistral-Small-24B | 0.0 | 100.0 | 0.0 |
 | 10 | Safety Ignored | Gemini-2.5-Flash | 0.0 | 100.0 | 0.0 |
-|  |  | Qwen3-8B | 0.0 | 90.9 | 0.0 |
-|  |  | Llama-3.1-8B | 26.4 | 37.0 | 30.8 |
+|  |  | Qwen3-32B | 0.1 | 99.9 | 0.1 |
+|  |  | Llama-3.3-70B | 0.1 | 99.9 | 0.3 |
 |  |  | Mistral-Small-24B | 0.0 | 100.0 | 0.0 |
 
 ---
@@ -185,4 +185,4 @@ python run_prompt_variants.py \
 
 Positions 3, 6, and 8 already have results — `run_prompt_variants.py` will skip completed files and only run the remaining 7 variants. Re-run `generate_spectrum_report.py` afterwards to update all charts.
 
-_Full per-setting tables: `results/report_per_model_config.md` | Supervisor summary: `results/report_supervisor.md`_
+_Full per-setting tables: `results/report_per_model_config.md` | Supervisor summary: `results/report.md`_

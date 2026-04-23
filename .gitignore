@@ -2,3 +2,9 @@
 /.idea/
 /.venv/
 /plots/
+/results/plots/
+__pycache__/
+*.pyc
+.DS_Store
+results/variants/*/results_*.json.backup*
+.claude/

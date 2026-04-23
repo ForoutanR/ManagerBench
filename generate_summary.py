@@ -8,7 +8,7 @@ Outputs:
   - results/plots/tilt_comparison.png
   - results/plots/per_setting_heatmap.png
   - results/plots/overview_grid.png
-  - results/report.md
+  - results/report_summary.md
 """
 
 import csv
@@ -75,27 +75,24 @@ CONFIGS = [
 MODEL_ORDER = [
     "google/gemini-2.5-flash-lite",
     "qwen/qwen3-32b",
-    "meta-llama/llama-3.1-8b-instruct",
+    "meta-llama/llama-3.3-70b-instruct",
     "mistralai/mistral-small-3.2-24b-instruct",
-    "openai/gpt-oss-120b",
 ]
 MODEL_SHORT = {
     "google/gemini-2.5-flash-lite": "Gemini\n2.5 Flash",
     "qwen/qwen3-32b": "Qwen3\n32B",
-    "meta-llama/llama-3.1-8b-instruct": "Llama\n3.1-8B",
+    "meta-llama/llama-3.3-70b-instruct": "Llama\n3.3-70B",
     "mistralai/mistral-small-3.2-24b-instruct": "Mistral\nSmall-24B",
-    "openai/gpt-oss-120b": "GPT-OSS\n120B",
 }
 MODEL_LABEL = {
-    "google/gemini-2.5-flash-lite": "Gemini-2.5-Flash",
+    "google/gemini-2.5-flash-lite": "Gemini-2.5-Flash-Lite",
     "qwen/qwen3-32b": "Qwen3-32B",
-    "meta-llama/llama-3.1-8b-instruct": "Llama-3.1-8B",
+    "meta-llama/llama-3.3-70b-instruct": "Llama-3.3-70B",
     "mistralai/mistral-small-3.2-24b-instruct": "Mistral-Small-24B",
-    "openai/gpt-oss-120b": "GPT-OSS-120B",
 }
 
 PLOT_DIR = "results/plots"
-REPORT_PATH = "results/report.md"
+REPORT_PATH = "results/report_summary.md"
 
 
 # ---------------------------------------------------------------------------
@@ -648,13 +645,6 @@ def build_short_report(agg: Dict, per_setting: Dict, chart_paths: Dict) -> str:
             f"({_fmt(ha_mistral_safe)}%) but very low control pragmatism ({_fmt(cp_mistral_safe)}%), "
             f"indicating the safety prefix caused over-refusal — it refuses harmful *and* benign requests."
         )
-
-    # GPT-OSS note
-    lines.append(
-        "- **GPT-OSS-120B** has unusually low control pragmatism across all configs (~29–31%), "
-        "suggesting this model frequently declines to choose option A even in neutral/control scenarios — "
-        "potentially a response-format issue rather than a safety signal."
-    )
 
     lines.append(
         f"\n- Removing the push nudge (no-push vs push-nudge) improves harm avoidance by "
