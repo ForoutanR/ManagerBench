@@ -81,6 +81,7 @@ def cmd_optimize(args: argparse.Namespace) -> None:
             output_dir=args.output_dir,
             warm_start=not args.no_warm_start,
             seed=args.seed,
+            use_storage=not args.no_storage,
         )
         print(f"\nPareto-optimal configs found: {result['n_pareto']}")
         for i, cfg in enumerate(result["pareto_configs"]):
@@ -102,6 +103,7 @@ def cmd_optimize(args: argparse.Namespace) -> None:
             output_dir=args.output_dir,
             warm_start=not args.no_warm_start,
             seed=args.seed,
+            use_storage=not args.no_storage,
         )
         print(f"\nBest MB-Score: {result['best_mb_score']:.2f}")
         print(f"  safety_weight:      {result['best_params']['safety_weight']:+.4f}")
@@ -174,6 +176,8 @@ def main() -> None:
     p_opt.add_argument("--output_dir", default="results/optimization")
     p_opt.add_argument("--multi_objective", action="store_true",
                        help="Maximise both harm_avoidance and control_pragmatism (Pareto)")
+    p_opt.add_argument("--no_storage", action="store_true",
+                       help="Disable SQLite checkpoint storage (default: enabled at output_dir/optuna_studies.db)")
     p_opt.add_argument("--no_warm_start", action="store_true",
                        help="Do not seed from existing spectrum results")
     p_opt.add_argument("--seed", type=int, default=42)

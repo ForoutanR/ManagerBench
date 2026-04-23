@@ -132,16 +132,29 @@ def _run_optuna_single(
     n_trials: int,
     warm_data: List[Dict],
     seed: int,
+    storage: Optional[str] = None,
+    study_name: Optional[str] = None,
 ) -> Dict:
     """Run single-objective with Optuna TPE."""
     sampler = optuna.samplers.TPESampler(seed=seed)
-    study = optuna.create_study(direction="maximize", sampler=sampler)
+    study = optuna.create_study(
+        direction="maximize",
+        sampler=sampler,
+        storage=storage,
+        study_name=study_name,
+        load_if_exists=True,
+    )
 
-    n_warm = _seed_study_single(study, warm_data) if warm_data else 0
-    if n_warm:
-        print(f"  Warm-started with {n_warm} existing observations")
+    n_existing = sum(1 for t in study.trials if t.state.is_finished())
+    if n_existing == 0:
+        n_warm = _seed_study_single(study, warm_data) if warm_data else 0
+        if n_warm:
+            print(f"  Warm-started with {n_warm} existing observations")
+    else:
+        n_warm = 0
+        print(f"  Resumed study with {n_existing} completed trials")
 
-    eval_count = {"n": 0}
+    eval_count = {"n": n_existing}
 
     def objective(trial):
         sw = trial.suggest_float("safety_weight", -1.0, 1.0)
@@ -158,7 +171,9 @@ def _run_optuna_single(
         return metrics["mb_score"]
 
     optuna.logging.set_verbosity(optuna.logging.WARNING)
-    study.optimize(objective, n_trials=n_trials, show_progress_bar=True)
+    remaining = max(0, n_trials - n_existing)
+    if remaining > 0:
+        study.optimize(objective, n_trials=remaining, show_progress_bar=True)
 
     best = study.best_trial
     trials_list = []
@@ -187,16 +202,29 @@ def _run_optuna_multi(
     n_trials: int,
     warm_data: List[Dict],
     seed: int,
+    storage: Optional[str] = None,
+    study_name: Optional[str] = None,
 ) -> Dict:
     """Run multi-objective with Optuna TPE."""
     sampler = optuna.samplers.TPESampler(seed=seed)
-    study = optuna.create_study(directions=["maximize", "maximize"], sampler=sampler)
+    study = optuna.create_study(
+        directions=["maximize", "maximize"],
+        sampler=sampler,
+        storage=storage,
+        study_name=study_name,
+        load_if_exists=True,
+    )
 
-    n_warm = _seed_study_multi(study, warm_data) if warm_data else 0
-    if n_warm:
-        print(f"  Warm-started with {n_warm} existing observations")
+    n_existing = sum(1 for t in study.trials if t.state.is_finished())
+    if n_existing == 0:
+        n_warm = _seed_study_multi(study, warm_data) if warm_data else 0
+        if n_warm:
+            print(f"  Warm-started with {n_warm} existing observations")
+    else:
+        n_warm = 0
+        print(f"  Resumed study with {n_existing} completed trials")
 
-    eval_count = {"n": 0}
+    eval_count = {"n": n_existing}
 
     def objective(trial):
         sw = trial.suggest_float("safety_weight", -1.0, 1.0)
@@ -211,7 +239,9 @@ def _run_optuna_multi(
         return metrics["harm_avoidance"], metrics["control_pragmatism"]
 
     optuna.logging.set_verbosity(optuna.logging.WARNING)
-    study.optimize(objective, n_trials=n_trials, show_progress_bar=True)
+    remaining = max(0, n_trials - n_existing)
+    if remaining > 0:
+        study.optimize(objective, n_trials=remaining, show_progress_bar=True)
 
     pareto_configs = []
     for t in study.best_trials:
@@ -482,6 +512,7 @@ def run_single_objective(
     output_dir: str = "results/optimization",
     warm_start: bool = True,
     seed: int = 42,
+    use_storage: bool = True,
 ) -> Dict:
     """Optimise MB-Score over (safety_weight, goal_pressure) for a given model."""
     os.makedirs(output_dir, exist_ok=True)
@@ -500,7 +531,13 @@ def run_single_objective(
     print(f"\nStarting single-objective optimisation ({n_trials} trials, backend={backend}) for {model_name}")
 
     if HAS_OPTUNA:
-        raw = _run_optuna_single(evaluator, n_trials, warm_data, seed)
+        storage_url = None
+        study_name = None
+        if use_storage:
+            db_path = os.path.join(output_dir, "optuna_studies.db")
+            storage_url = f"sqlite:///{db_path}"
+            study_name = f"single_{model_name.replace('/', '_')}"
+        raw = _run_optuna_single(evaluator, n_trials, warm_data, seed, storage=storage_url, study_name=study_name)
     else:
         raw = _run_numpy_single(evaluator, n_trials, warm_data, seed)
 
@@ -545,6 +582,7 @@ def run_multi_objective(
     output_dir: str = "results/optimization",
     warm_start: bool = True,
     seed: int = 42,
+    use_storage: bool = True,
 ) -> Dict:
     """Multi-objective: maximise both harm_avoidance and control_pragmatism (Pareto)."""
     os.makedirs(output_dir, exist_ok=True)
@@ -563,7 +601,13 @@ def run_multi_objective(
     print(f"\nStarting multi-objective optimisation ({n_trials} trials, backend={backend}) for {model_name}")
 
     if HAS_OPTUNA:
-        raw = _run_optuna_multi(evaluator, n_trials, warm_data, seed)
+        storage_url = None
+        study_name = None
+        if use_storage:
+            db_path = os.path.join(output_dir, "optuna_studies.db")
+            storage_url = f"sqlite:///{db_path}"
+            study_name = f"multi_{model_name.replace('/', '_')}"
+        raw = _run_optuna_multi(evaluator, n_trials, warm_data, seed, storage=storage_url, study_name=study_name)
     else:
         raw = _run_numpy_multi(evaluator, n_trials, warm_data, seed)
 
