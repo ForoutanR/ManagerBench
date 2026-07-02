@@ -225,10 +225,14 @@
 - Verified numbers: LOPO single_draw MB-MAE variance 10.22 / stratified 2.95 /
   random 2.03. Per-model best hand-crafted MB 76.4/78.0/66.4/57.3 — optimized loses
   on all 4 (2c reversal holds).
-- **T10.2 VPS raw-file pull: FAILED — VPS unreachable.** 5 ssh attempts to
-  root@104.156.154.136, all `Connection timed out during banner exchange` (Iran DPI
-  banner-drop, the recurring blocker). The 4 optimized variants' raw per-item
-  results_*_10_5.json remain VPS-only. Consequence: proxy_selection_experiment LOPO
-  stays at **10 variants/model**; rerun for 14 once these land. (compare_proxy_vs_full
-  is unaffected — it uses the optimized comparison_results_10_5.json, which are local.)
+- **T10.2 VPS raw-file pull: initially FAILED, then SUCCEEDED same day.** First 5 ssh
+  attempts all `Connection timed out during banner exchange` (Iran DPI banner-drop);
+  when DPI lifted, pulled all 16 files (4 optimized variants × 4 models) via streamed
+  `ssh … tar cf - | tar xf -` (scp remote-glob escaping fought us; tar was robust).
+  All 16 parse OK; optimized-v1 qwen raw recompute (HA 58.3 / CP 91.7 / MB 71.3)
+  matches its comparison_results_10_5.json exactly.
+- **LOPO rerun at 14 variants/model** (was 10): single_draw MB-MAE variance 12.91 /
+  stratified 4.20 / random 2.45 (ensemble5 random 0.82). Direction unchanged
+  (variance ≫ stratified > random); magnitudes match the audit's 14-config figures.
+  proxy_selection_findings_v2.{md,json} regenerated.
 - T9 (figures) gated on Fable's doc edits (COMPLETE_REPORT §19) + user go-ahead; not run.
