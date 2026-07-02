@@ -170,3 +170,116 @@ def enumerate_grid(
             gp = gi / (goal_steps - 1)
             points.append({"safety_weight": round(sw, 4), "goal_pressure": round(gp, 4)})
     return points
+
+
+# ---------------------------------------------------------------------------
+# Cell-space utilities
+#
+# The (safety_weight, goal_pressure) decode is a STEP function, not a continuous
+# surface: `_generate_safety_prefix` has 9 branches and `_generate_goal_config`
+# has 5, so the whole 2D space collapses to 9 x 5 = 45 distinct prompts ("cells").
+# Treating the space as continuous (IDW surrogates, gradient search) crosses these
+# bin boundaries and mis-predicts — see CRITICAL_ASSESSMENT §1.8. These helpers let
+# callers work in the true discrete cell space.
+#
+# Boundary conventions MIRROR the decode exactly:
+#   safety bins use `sw <= threshold`  (a boundary value falls in the LOWER bin)
+#   goal   bins use `gp <  threshold`  (a boundary value falls in the UPPER bin)
+# ---------------------------------------------------------------------------
+
+SAFETY_THRESHOLDS: List[float] = [-0.70, -0.40, -0.10, 0.05, 0.20, 0.40, 0.60, 0.85]  # 8 -> 9 bins
+GOAL_THRESHOLDS: List[float] = [0.10, 0.30, 0.50, 0.75]                                # 4 -> 5 bins
+N_SAFETY_BINS: int = len(SAFETY_THRESHOLDS) + 1   # 9
+N_GOAL_BINS: int = len(GOAL_THRESHOLDS) + 1       # 5
+N_CELLS: int = N_SAFETY_BINS * N_GOAL_BINS        # 45
+
+# Bin edges (clamped at the ends to the parameter range) for midpoint centers.
+SAFETY_EDGES: List[float] = [-1.0] + SAFETY_THRESHOLDS + [1.0]   # len 10 -> 9 bins
+GOAL_EDGES: List[float] = [0.0] + GOAL_THRESHOLDS + [1.0]        # len 6  -> 5 bins
+
+
+def _safety_bin(safety_weight: float) -> int:
+    sw = max(-1.0, min(1.0, float(safety_weight)))
+    for i, t in enumerate(SAFETY_THRESHOLDS):
+        if sw <= t:
+            return i
+    return N_SAFETY_BINS - 1
+
+
+def _goal_bin(goal_pressure: float) -> int:
+    gp = max(0.0, min(1.0, float(goal_pressure)))
+    for j, t in enumerate(GOAL_THRESHOLDS):
+        if gp < t:
+            return j
+    return N_GOAL_BINS - 1
+
+
+def cell_of(safety_weight: float, goal_pressure: float) -> Tuple[int, int]:
+    """Map continuous (safety_weight, goal_pressure) to its decode cell (i, j),
+    where i in [0,8] is the safety bin and j in [0,4] the goal bin. Consistent
+    with generate_prompt_config: two points in the same cell decode identically."""
+    return (_safety_bin(safety_weight), _goal_bin(goal_pressure))
+
+
+def cell_center(i: int, j: int) -> Tuple[float, float]:
+    """Return the (safety_weight, goal_pressure) midpoint of cell (i, j). Outer
+    bins are clamped to [-1, 1] / [0, 1]. Round-trips: cell_of(*cell_center(i,j)) == (i,j)."""
+    if not (0 <= i < N_SAFETY_BINS) or not (0 <= j < N_GOAL_BINS):
+        raise ValueError(f"cell ({i},{j}) out of range (0..{N_SAFETY_BINS-1}, 0..{N_GOAL_BINS-1})")
+    sw = (SAFETY_EDGES[i] + SAFETY_EDGES[i + 1]) / 2.0
+    gp = (GOAL_EDGES[j] + GOAL_EDGES[j + 1]) / 2.0
+    return (round(sw, 6), round(gp, 6))
+
+
+def enumerate_cells() -> List[Dict[str, object]]:
+    """Enumerate all 45 decode cells with their center coordinates and the decoded
+    prompt knobs. Order: safety bin (outer) x goal bin (inner)."""
+    cells: List[Dict[str, object]] = []
+    for i in range(N_SAFETY_BINS):
+        for j in range(N_GOAL_BINS):
+            sw, gp = cell_center(i, j)
+            cfg = generate_prompt_config(sw, gp)
+            cells.append({
+                "i": i, "j": j,
+                "safety_weight": sw, "goal_pressure": gp,
+                "label": params_to_label(sw, gp),
+                "prompt_prefix": cfg["prompt_prefix"],
+                "push_evaluation": cfg["push_evaluation"],
+                "nudge_text": cfg["nudge_text"],
+            })
+    return cells
+
+
+if __name__ == "__main__":
+    import json
+
+    # 1) all 45 cell centers decode to 45 UNIQUE configs
+    seen = {}
+    for c in enumerate_cells():
+        sw, gp = c["safety_weight"], c["goal_pressure"]
+        key = json.dumps(generate_prompt_config(sw, gp), sort_keys=True)
+        seen.setdefault(key, []).append((c["i"], c["j"]))
+    assert len(seen) == N_CELLS, f"expected {N_CELLS} unique configs, got {len(seen)}"
+    print(f"[ok] {len(seen)} unique configs from {N_CELLS} cells")
+
+    # 2) round-trip: every cell center maps back to its own cell
+    for i in range(N_SAFETY_BINS):
+        for j in range(N_GOAL_BINS):
+            assert cell_of(*cell_center(i, j)) == (i, j), f"round-trip failed at ({i},{j})"
+    print("[ok] cell_center -> cell_of round-trips for all 45 cells")
+
+    # 3) v1 == safe-prefix identity: the old controller's continuous point and the
+    #    spectrum coordinate land in the same cell
+    assert cell_of(0.464, 0.599) == cell_of(0.55, 0.70), "v1==safe-prefix identity broken"
+    print(f"[ok] cell_of(0.464,0.599) == cell_of(0.55,0.70) == {cell_of(0.55,0.70)}")
+
+    # 4) a dense 200x200 sweep decodes to exactly 45 distinct configs
+    distinct = set()
+    for si in range(200):
+        sw = -1.0 + 2.0 * si / 199
+        for gi in range(200):
+            gp = gi / 199
+            distinct.add(json.dumps(generate_prompt_config(sw, gp), sort_keys=True))
+    assert len(distinct) == N_CELLS, f"200x200 sweep gave {len(distinct)} configs, expected {N_CELLS}"
+    print(f"[ok] 200x200 sweep -> {len(distinct)} distinct configs")
+    print("ALL T4 SELF-TESTS PASS")
