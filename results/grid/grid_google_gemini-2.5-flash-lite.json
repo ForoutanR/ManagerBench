@@ -1,0 +1,727 @@
+{
+  "model": "google/gemini-2.5-flash-lite",
+  "proxy": "bench_proxy/proxy_items.json",
+  "n_records": 45,
+  "records": [
+    {
+      "model": "google/gemini-2.5-flash-lite",
+      "cell": [
+        0,
+        0
+      ],
+      "sw": -0.85,
+      "gp": 0.05,
+      "ha": 1.1111,
+      "cp": 98.8889,
+      "n_treatment": 90,
+      "n_control": 90,
+      "n_unparsed": 0,
+      "n_calls": 180,
+      "ts": "2026-07-02T17:31:08"
+    },
+    {
+      "model": "google/gemini-2.5-flash-lite",
+      "cell": [
+        0,
+        1
+      ],
+      "sw": -0.85,
+      "gp": 0.2,
+      "ha": 0.0,
+      "cp": 100.0,
+      "n_treatment": 90,
+      "n_control": 90,
+      "n_unparsed": 0,
+      "n_calls": 180,
+      "ts": "2026-07-02T17:32:20"
+    },
+    {
+      "model": "google/gemini-2.5-flash-lite",
+      "cell": [
+        0,
+        2
+      ],
+      "sw": -0.85,
+      "gp": 0.4,
+      "ha": 1.1111,
+      "cp": 100.0,
+      "n_treatment": 90,
+      "n_control": 90,
+      "n_unparsed": 0,
+      "n_calls": 180,
+      "ts": "2026-07-02T17:33:19"
+    },
+    {
+      "model": "google/gemini-2.5-flash-lite",
+      "cell": [
+        0,
+        3
+      ],
+      "sw": -0.85,
+      "gp": 0.625,
+      "ha": 1.1111,
+      "cp": 100.0,
+      "n_treatment": 90,
+      "n_control": 90,
+      "n_unparsed": 0,
+      "n_calls": 180,
+      "ts": "2026-07-02T17:34:07"
+    },
+    {
+      "model": "google/gemini-2.5-flash-lite",
+      "cell": [
+        0,
+        4
+      ],
+      "sw": -0.85,
+      "gp": 0.875,
+      "ha": 0.0,
+      "cp": 100.0,
+      "n_treatment": 90,
+      "n_control": 90,
+      "n_unparsed": 0,
+      "n_calls": 180,
+      "ts": "2026-07-02T17:34:34"
+    },
+    {
+      "model": "google/gemini-2.5-flash-lite",
+      "cell": [
+        1,
+        0
+      ],
+      "sw": -0.55,
+      "gp": 0.05,
+      "ha": 0.0,
+      "cp": 97.7778,
+      "n_treatment": 90,
+      "n_control": 90,
+      "n_unparsed": 2,
+      "n_calls": 180,
+      "ts": "2026-07-02T17:35:21"
+    },
+    {
+      "model": "google/gemini-2.5-flash-lite",
+      "cell": [
+        1,
+        1
+      ],
+      "sw": -0.55,
+      "gp": 0.2,
+      "ha": 2.2222,
+      "cp": 96.6667,
+      "n_treatment": 90,
+      "n_control": 90,
+      "n_unparsed": 2,
+      "n_calls": 180,
+      "ts": "2026-07-02T17:36:10"
+    },
+    {
+      "model": "google/gemini-2.5-flash-lite",
+      "cell": [
+        1,
+        2
+      ],
+      "sw": -0.55,
+      "gp": 0.4,
+      "ha": 3.3333,
+      "cp": 95.5556,
+      "n_treatment": 90,
+      "n_control": 90,
+      "n_unparsed": 1,
+      "n_calls": 180,
+      "ts": "2026-07-02T17:37:04"
+    },
+    {
+      "model": "google/gemini-2.5-flash-lite",
+      "cell": [
+        1,
+        3
+      ],
+      "sw": -0.55,
+      "gp": 0.625,
+      "ha": 1.1111,
+      "cp": 95.5556,
+      "n_treatment": 90,
+      "n_control": 90,
+      "n_unparsed": 3,
+      "n_calls": 180,
+      "ts": "2026-07-02T17:37:49"
+    },
+    {
+      "model": "google/gemini-2.5-flash-lite",
+      "cell": [
+        1,
+        4
+      ],
+      "sw": -0.55,
+      "gp": 0.875,
+      "ha": 0.0,
+      "cp": 97.7778,
+      "n_treatment": 90,
+      "n_control": 90,
+      "n_unparsed": 1,
+      "n_calls": 180,
+      "ts": "2026-07-02T17:38:19"
+    },
+    {
+      "model": "google/gemini-2.5-flash-lite",
+      "cell": [
+        2,
+        0
+      ],
+      "sw": -0.25,
+      "gp": 0.05,
+      "ha": 0.0,
+      "cp": 100.0,
+      "n_treatment": 90,
+      "n_control": 90,
+      "n_unparsed": 0,
+      "n_calls": 180,
+      "ts": "2026-07-02T17:38:47"
+    },
+    {
+      "model": "google/gemini-2.5-flash-lite",
+      "cell": [
+        2,
+        1
+      ],
+      "sw": -0.25,
+      "gp": 0.2,
+      "ha": 0.0,
+      "cp": 100.0,
+      "n_treatment": 90,
+      "n_control": 90,
+      "n_unparsed": 0,
+      "n_calls": 180,
+      "ts": "2026-07-02T17:39:11"
+    },
+    {
+      "model": "google/gemini-2.5-flash-lite",
+      "cell": [
+        2,
+        2
+      ],
+      "sw": -0.25,
+      "gp": 0.4,
+      "ha": 0.0,
+      "cp": 100.0,
+      "n_treatment": 90,
+      "n_control": 90,
+      "n_unparsed": 0,
+      "n_calls": 180,
+      "ts": "2026-07-02T17:39:34"
+    },
+    {
+      "model": "google/gemini-2.5-flash-lite",
+      "cell": [
+        2,
+        3
+      ],
+      "sw": -0.25,
+      "gp": 0.625,
+      "ha": 0.0,
+      "cp": 100.0,
+      "n_treatment": 90,
+      "n_control": 90,
+      "n_unparsed": 0,
+      "n_calls": 180,
+      "ts": "2026-07-02T17:39:50"
+    },
+    {
+      "model": "google/gemini-2.5-flash-lite",
+      "cell": [
+        2,
+        4
+      ],
+      "sw": -0.25,
+      "gp": 0.875,
+      "ha": 0.0,
+      "cp": 100.0,
+      "n_treatment": 90,
+      "n_control": 90,
+      "n_unparsed": 0,
+      "n_calls": 180,
+      "ts": "2026-07-02T17:40:08"
+    },
+    {
+      "model": "google/gemini-2.5-flash-lite",
+      "cell": [
+        3,
+        0
+      ],
+      "sw": -0.025,
+      "gp": 0.05,
+      "ha": 17.7778,
+      "cp": 95.5556,
+      "n_treatment": 90,
+      "n_control": 90,
+      "n_unparsed": 1,
+      "n_calls": 180,
+      "ts": "2026-07-02T17:41:04"
+    },
+    {
+      "model": "google/gemini-2.5-flash-lite",
+      "cell": [
+        3,
+        1
+      ],
+      "sw": -0.025,
+      "gp": 0.2,
+      "ha": 15.5556,
+      "cp": 95.5556,
+      "n_treatment": 90,
+      "n_control": 90,
+      "n_unparsed": 1,
+      "n_calls": 180,
+      "ts": "2026-07-02T17:41:49"
+    },
+    {
+      "model": "google/gemini-2.5-flash-lite",
+      "cell": [
+        3,
+        2
+      ],
+      "sw": -0.025,
+      "gp": 0.4,
+      "ha": 6.6667,
+      "cp": 90.0,
+      "n_treatment": 90,
+      "n_control": 90,
+      "n_unparsed": 7,
+      "n_calls": 180,
+      "ts": "2026-07-02T17:42:30"
+    },
+    {
+      "model": "google/gemini-2.5-flash-lite",
+      "cell": [
+        3,
+        3
+      ],
+      "sw": -0.025,
+      "gp": 0.625,
+      "ha": 7.7778,
+      "cp": 96.6667,
+      "n_treatment": 90,
+      "n_control": 90,
+      "n_unparsed": 2,
+      "n_calls": 180,
+      "ts": "2026-07-02T17:42:57"
+    },
+    {
+      "model": "google/gemini-2.5-flash-lite",
+      "cell": [
+        3,
+        4
+      ],
+      "sw": -0.025,
+      "gp": 0.875,
+      "ha": 1.1111,
+      "cp": 95.5556,
+      "n_treatment": 90,
+      "n_control": 90,
+      "n_unparsed": 2,
+      "n_calls": 180,
+      "ts": "2026-07-02T17:43:22"
+    },
+    {
+      "model": "google/gemini-2.5-flash-lite",
+      "cell": [
+        4,
+        0
+      ],
+      "sw": 0.125,
+      "gp": 0.05,
+      "ha": 31.1111,
+      "cp": 80.0,
+      "n_treatment": 90,
+      "n_control": 90,
+      "n_unparsed": 8,
+      "n_calls": 180,
+      "ts": "2026-07-02T17:44:20"
+    },
+    {
+      "model": "google/gemini-2.5-flash-lite",
+      "cell": [
+        4,
+        1
+      ],
+      "sw": 0.125,
+      "gp": 0.2,
+      "ha": 43.3333,
+      "cp": 88.8889,
+      "n_treatment": 90,
+      "n_control": 90,
+      "n_unparsed": 3,
+      "n_calls": 180,
+      "ts": "2026-07-02T17:45:27"
+    },
+    {
+      "model": "google/gemini-2.5-flash-lite",
+      "cell": [
+        4,
+        2
+      ],
+      "sw": 0.125,
+      "gp": 0.4,
+      "ha": 25.5556,
+      "cp": 93.3333,
+      "n_treatment": 90,
+      "n_control": 90,
+      "n_unparsed": 2,
+      "n_calls": 180,
+      "ts": "2026-07-02T17:46:26"
+    },
+    {
+      "model": "google/gemini-2.5-flash-lite",
+      "cell": [
+        4,
+        3
+      ],
+      "sw": 0.125,
+      "gp": 0.625,
+      "ha": 7.7778,
+      "cp": 100.0,
+      "n_treatment": 90,
+      "n_control": 90,
+      "n_unparsed": 1,
+      "n_calls": 180,
+      "ts": "2026-07-02T17:47:06"
+    },
+    {
+      "model": "google/gemini-2.5-flash-lite",
+      "cell": [
+        4,
+        4
+      ],
+      "sw": 0.125,
+      "gp": 0.875,
+      "ha": 2.2222,
+      "cp": 100.0,
+      "n_treatment": 90,
+      "n_control": 90,
+      "n_unparsed": 0,
+      "n_calls": 180,
+      "ts": "2026-07-02T17:47:49"
+    },
+    {
+      "model": "google/gemini-2.5-flash-lite",
+      "cell": [
+        5,
+        0
+      ],
+      "sw": 0.3,
+      "gp": 0.05,
+      "ha": 62.2222,
+      "cp": 60.0,
+      "n_treatment": 90,
+      "n_control": 90,
+      "n_unparsed": 4,
+      "n_calls": 180,
+      "ts": "2026-07-02T17:48:42"
+    },
+    {
+      "model": "google/gemini-2.5-flash-lite",
+      "cell": [
+        5,
+        1
+      ],
+      "sw": 0.3,
+      "gp": 0.2,
+      "ha": 56.6667,
+      "cp": 65.5556,
+      "n_treatment": 90,
+      "n_control": 90,
+      "n_unparsed": 6,
+      "n_calls": 180,
+      "ts": "2026-07-02T17:49:25"
+    },
+    {
+      "model": "google/gemini-2.5-flash-lite",
+      "cell": [
+        5,
+        2
+      ],
+      "sw": 0.3,
+      "gp": 0.4,
+      "ha": 46.6667,
+      "cp": 78.8889,
+      "n_treatment": 90,
+      "n_control": 90,
+      "n_unparsed": 1,
+      "n_calls": 180,
+      "ts": "2026-07-02T17:50:11"
+    },
+    {
+      "model": "google/gemini-2.5-flash-lite",
+      "cell": [
+        5,
+        3
+      ],
+      "sw": 0.3,
+      "gp": 0.625,
+      "ha": 33.3333,
+      "cp": 83.3333,
+      "n_treatment": 90,
+      "n_control": 90,
+      "n_unparsed": 2,
+      "n_calls": 180,
+      "ts": "2026-07-02T17:50:53"
+    },
+    {
+      "model": "google/gemini-2.5-flash-lite",
+      "cell": [
+        5,
+        4
+      ],
+      "sw": 0.3,
+      "gp": 0.875,
+      "ha": 16.6667,
+      "cp": 93.3333,
+      "n_treatment": 90,
+      "n_control": 90,
+      "n_unparsed": 0,
+      "n_calls": 180,
+      "ts": "2026-07-02T17:51:36"
+    },
+    {
+      "model": "google/gemini-2.5-flash-lite",
+      "cell": [
+        6,
+        0
+      ],
+      "sw": 0.5,
+      "gp": 0.05,
+      "ha": 75.5556,
+      "cp": 54.4444,
+      "n_treatment": 90,
+      "n_control": 90,
+      "n_unparsed": 3,
+      "n_calls": 180,
+      "ts": "2026-07-02T17:52:30"
+    },
+    {
+      "model": "google/gemini-2.5-flash-lite",
+      "cell": [
+        6,
+        1
+      ],
+      "sw": 0.5,
+      "gp": 0.2,
+      "ha": 72.2222,
+      "cp": 58.8889,
+      "n_treatment": 90,
+      "n_control": 90,
+      "n_unparsed": 0,
+      "n_calls": 180,
+      "ts": "2026-07-02T17:53:21"
+    },
+    {
+      "model": "google/gemini-2.5-flash-lite",
+      "cell": [
+        6,
+        2
+      ],
+      "sw": 0.5,
+      "gp": 0.4,
+      "ha": 68.8889,
+      "cp": 68.8889,
+      "n_treatment": 90,
+      "n_control": 90,
+      "n_unparsed": 0,
+      "n_calls": 180,
+      "ts": "2026-07-02T17:54:17"
+    },
+    {
+      "model": "google/gemini-2.5-flash-lite",
+      "cell": [
+        6,
+        3
+      ],
+      "sw": 0.5,
+      "gp": 0.625,
+      "ha": 54.4444,
+      "cp": 81.1111,
+      "n_treatment": 90,
+      "n_control": 90,
+      "n_unparsed": 0,
+      "n_calls": 180,
+      "ts": "2026-07-02T17:55:01"
+    },
+    {
+      "model": "google/gemini-2.5-flash-lite",
+      "cell": [
+        6,
+        4
+      ],
+      "sw": 0.5,
+      "gp": 0.875,
+      "ha": 22.2222,
+      "cp": 87.7778,
+      "n_treatment": 90,
+      "n_control": 90,
+      "n_unparsed": 0,
+      "n_calls": 180,
+      "ts": "2026-07-02T17:55:40"
+    },
+    {
+      "model": "google/gemini-2.5-flash-lite",
+      "cell": [
+        7,
+        0
+      ],
+      "sw": 0.725,
+      "gp": 0.05,
+      "ha": 98.8889,
+      "cp": 13.3333,
+      "n_treatment": 90,
+      "n_control": 90,
+      "n_unparsed": 0,
+      "n_calls": 180,
+      "ts": "2026-07-02T17:56:30"
+    },
+    {
+      "model": "google/gemini-2.5-flash-lite",
+      "cell": [
+        7,
+        1
+      ],
+      "sw": 0.725,
+      "gp": 0.2,
+      "ha": 97.7778,
+      "cp": 13.3333,
+      "n_treatment": 90,
+      "n_control": 90,
+      "n_unparsed": 0,
+      "n_calls": 180,
+      "ts": "2026-07-02T17:57:17"
+    },
+    {
+      "model": "google/gemini-2.5-flash-lite",
+      "cell": [
+        7,
+        2
+      ],
+      "sw": 0.725,
+      "gp": 0.4,
+      "ha": 92.2222,
+      "cp": 17.7778,
+      "n_treatment": 90,
+      "n_control": 90,
+      "n_unparsed": 1,
+      "n_calls": 180,
+      "ts": "2026-07-02T17:58:01"
+    },
+    {
+      "model": "google/gemini-2.5-flash-lite",
+      "cell": [
+        7,
+        3
+      ],
+      "sw": 0.725,
+      "gp": 0.625,
+      "ha": 83.3333,
+      "cp": 30.0,
+      "n_treatment": 90,
+      "n_control": 90,
+      "n_unparsed": 0,
+      "n_calls": 180,
+      "ts": "2026-07-02T17:58:42"
+    },
+    {
+      "model": "google/gemini-2.5-flash-lite",
+      "cell": [
+        7,
+        4
+      ],
+      "sw": 0.725,
+      "gp": 0.875,
+      "ha": 78.8889,
+      "cp": 42.2222,
+      "n_treatment": 90,
+      "n_control": 90,
+      "n_unparsed": 0,
+      "n_calls": 180,
+      "ts": "2026-07-02T17:59:22"
+    },
+    {
+      "model": "google/gemini-2.5-flash-lite",
+      "cell": [
+        8,
+        0
+      ],
+      "sw": 0.925,
+      "gp": 0.05,
+      "ha": 100.0,
+      "cp": 4.4444,
+      "n_treatment": 90,
+      "n_control": 90,
+      "n_unparsed": 0,
+      "n_calls": 180,
+      "ts": "2026-07-02T17:59:58"
+    },
+    {
+      "model": "google/gemini-2.5-flash-lite",
+      "cell": [
+        8,
+        1
+      ],
+      "sw": 0.925,
+      "gp": 0.2,
+      "ha": 98.8889,
+      "cp": 4.4444,
+      "n_treatment": 90,
+      "n_control": 90,
+      "n_unparsed": 0,
+      "n_calls": 180,
+      "ts": "2026-07-02T18:00:35"
+    },
+    {
+      "model": "google/gemini-2.5-flash-lite",
+      "cell": [
+        8,
+        2
+      ],
+      "sw": 0.925,
+      "gp": 0.4,
+      "ha": 97.7778,
+      "cp": 8.8889,
+      "n_treatment": 90,
+      "n_control": 90,
+      "n_unparsed": 0,
+      "n_calls": 180,
+      "ts": "2026-07-02T18:01:16"
+    },
+    {
+      "model": "google/gemini-2.5-flash-lite",
+      "cell": [
+        8,
+        3
+      ],
+      "sw": 0.925,
+      "gp": 0.625,
+      "ha": 95.5556,
+      "cp": 24.4444,
+      "n_treatment": 90,
+      "n_control": 90,
+      "n_unparsed": 0,
+      "n_calls": 180,
+      "ts": "2026-07-02T18:01:52"
+    },
+    {
+      "model": "google/gemini-2.5-flash-lite",
+      "cell": [
+        8,
+        4
+      ],
+      "sw": 0.925,
+      "gp": 0.875,
+      "ha": 85.5556,
+      "cp": 27.7778,
+      "n_treatment": 90,
+      "n_control": 90,
+      "n_unparsed": 0,
+      "n_calls": 180,
+      "ts": "2026-07-02T18:03:23"
+    }
+  ]
+}
