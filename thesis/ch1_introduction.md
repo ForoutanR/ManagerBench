@@ -1,0 +1,83 @@
+# Chapter 1 — Introduction
+
+*Draft. Source: COMPLETE_REPORT §1–3, workshop_paper §1.*
+
+## 1.1 Motivation
+
+Large language models are increasingly deployed as autonomous agents: given an
+operational goal — reduce claim-processing time, raise engagement, close support tickets
+— they choose and take actions with limited human oversight. Such an agent routinely
+meets a conflict between achieving its goal and avoiding harm to people. The dangerous
+case is the *harmful-but-effective* action, which advances the stated goal while hurting
+a human stakeholder: a claims agent that hits its speed target by silently denying
+borderline-valid claims, a moderation agent that raises engagement by amplifying
+outrage. Two failure modes bracket the behaviour we want. An *over-pragmatic* agent takes
+the harmful shortcut to hit the goal; an *over-cautious* agent refuses or defers even when
+the effective action is perfectly safe, destroying its usefulness. A good agent is safe
+when the stakes are real and helpful when they are not — it sits between the two extremes
+on what we call the safety–pragmatism trade-off. ManagerBench (Simhi et al., 2025)
+measures exactly where a model sits on this trade-off, through two rates: Harm Avoidance
+(HA), the fraction of genuinely harmful dilemmas on which the model takes the safe option,
+and Control Pragmatism (CP), the fraction of harmless control items on which it still
+takes the effective action.
+
+## 1.2 Problem statement
+
+The model's weights are fixed — in the common case, a hosted model that cannot be
+retrained. The one control surface available is the prompt, and in particular the system
+prompt that frames how the model should behave across every request. This thesis asks:
+
+> Can we move a fixed LLM to a chosen point on its safety–pragmatism trade-off, cheaply
+> and interpretably, purely by optimising the prompt — and can we build a tool that, given
+> a *requested* safety and usefulness level, returns a prompt that achieves it, with a
+> statistical guarantee or an honest signal that the request is unreachable?
+
+Answering this requires three things that turn out to interact: an interpretable prompt
+space to search, a cheap way to evaluate candidate prompts, and an honest validation of
+the result. The central finding of the thesis is that the second of these — the cheap
+evaluation — is not a neutral convenience. The natural way to make evaluation cheap
+silently biases the search, and getting it right is what separates a pipeline that beats
+hand-written prompts from one that loses to them.
+
+## 1.3 Contributions
+
+1. **A method.** Prompt design is cast as black-box optimisation over two interpretable
+   continuous knobs — a safety-framing weight and a goal-pressure level — decoded to a
+   system prompt by a fixed template, scored on a cheap benchmark subset, and searched by
+   Bayesian optimisation. The decode turns out to discretise the space into 45 distinct
+   prompts, which we exploit for exact ground truth.
+2. **The proxy-bias result (the core).** The intuitive "keep the most informative items"
+   subset — and the decision-boundary selections used by recent performance-guided
+   methods — is a *biased* estimator of the full benchmark; the bias is
+   configuration-conditional, cannot be removed by calibration, and, sitting inside the
+   search loop, steers Bayesian optimisation to prompts that lose to the best hand-written
+   prompt on all four models. Representative sampling of the same budget is nearly
+   unbiased.
+3. **A repaired pipeline.** Changing only the evaluation — representative sampling plus an
+   exhaustive sweep of the 45-cell space, at $4.64 of API spend — reverses the outcome:
+   validated winners beat the best hand-written prompt on three of four models, by +3.9 to
+   +16.7 MB points, all in a region no baseline had sampled.
+4. **A characterisation.** The safety knob is a universal lever on harm avoidance; goal
+   pressure mostly erodes safety for little pragmatic gain; effects are insensitive to
+   stated stakes but do not transfer across models; and prompt-based steering is fragile
+   to the exact wording of the safety sentence. A classifier/ROC reading unifies these:
+   prompts move a decision threshold along a fixed harm-discrimination curve, so
+   steerability is a model's discrimination quality.
+5. **A controller.** Inverting the measured map yields a deployment tool: given a target
+   operating point it returns a prompt with a distribution-free (split-conformal) interval
+   on the achieved point, an optional closed-loop verification that hit a live target
+   within 2.1 points, and an honest infeasibility flag — packaged as a small demonstration
+   CLI.
+
+## 1.4 Roadmap
+
+Chapter 2 gives the background — ManagerBench, the metrics, Bayesian and multi-objective
+optimisation, subset evaluation, and a short primer on conformal prediction. Chapter 3
+describes the method and infrastructure. Chapters 4 and 5 are the core: the proxy-bias
+result and the search damage it causes, together with the repair. Chapter 6
+characterises how the knobs move each model. Chapter 7 presents the controller and its
+guarantees. Chapter 8 places the work in the literature, Chapter 9 discusses limitations
+and future work, and Chapter 10 concludes. The appendices record the alignment with the
+approved proposal, full result tables, reproducibility details, and a chronological
+journal of every approach tried — including the ones that failed, which in this project
+turned out to be the most instructive.
