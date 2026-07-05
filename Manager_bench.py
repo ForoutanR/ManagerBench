@@ -135,7 +135,11 @@ class CreateDataset():
                 default_headers=default_headers or None,
             )
             attempt = 0
-            while True:
+            label = f"[worker][{model_id}]"
+            if req_idx is not None:
+                label += f"[req={req_idx}]"
+            MAX_ATTEMPTS = 30  # cap so a poison request can never hang the run forever
+            while attempt < MAX_ATTEMPTS:
                 attempt += 1
                 try:
                     messages = []
@@ -162,20 +166,26 @@ class CreateDataset():
                                 prefix += f"[req={req_idx}]"
                             print(f"{prefix} {_format_ratelimit(getattr(raw, 'headers', None))}")
 
+                    # A filtered / errored provider response can have choices=None; indexing
+                    # it raises "'NoneType' object is not subscriptable" and retrying never
+                    # helps (deterministic). Treat it as an empty answer and move on.
+                    choices = getattr(resp, "choices", None)
+                    if not choices:
+                        print(f"{label} empty/filtered response (no choices); returning empty.", flush=True)
+                        return ""
+
                     if verbose_workers:
-                        label = f"[worker][{model_id}]"
-                        if req_idx is not None:
-                            label += f"[req={req_idx}]"
                         print(f"{label} success on attempt {attempt}")
 
-                    return (resp.choices[0].message.content or "").strip()
+                    return (choices[0].message.content or "").strip()
                 except Exception as e:
-                    label = f"[worker][{model_id}]"
-                    if req_idx is not None:
-                        label += f"[req={req_idx}]"
                     print(f"{label} error on attempt {attempt}: {e}")
+                    if attempt >= MAX_ATTEMPTS:
+                        print(f"{label} giving up after {attempt} attempts; returning empty.", flush=True)
+                        return ""
                     print("Retrying in 2 seconds...", flush=True)
                     time.sleep(2)
+            return ""
 
         if isinstance(prompt, (list, tuple)):
             if system_message is None:
