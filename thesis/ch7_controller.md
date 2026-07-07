@@ -68,13 +68,26 @@ infeasible. This converts the study from descriptive to prescriptive: a use-case
 the safety and usefulness it needs and receives either a prompt that provably meets it or
 an explicit statement that its requirement is off the model's achievable frontier.
 
-## 7.5 External validity [PENDING batch B]
+## 7.5 External validity
 
-*To be completed from `results/external/` once the XSTest and HarmBench runs finish.*
-The controller's operating points are defined on ManagerBench; this section will test
-whether a selected prompt's safety/pragmatism behaviour holds on independent benchmarks —
-over-refusal on XSTest (safe prompts that should be answered) and attack-success on
-HarmBench standard behaviours (harmful requests that should be refused) — comparing each
-winner prompt against its model's neutral baseline. The HarmBench scoring uses an
-LLM-judge rather than the official GPU classifier (unavailable on our infrastructure);
-this deviation will be stated with the results.
+We ran each grid winner and its model's neutral baseline on two independent benchmarks:
+XSTest (250 safe prompts, over-refusal) and HarmBench's 200 standard non-copyright
+behaviours (harmful requests, attack-success). Both are scored by an LLM judge
+(gemini-2.5-flash-lite); a string heuristic was also computed but disagrees with the
+judge by 40–55% on XSTest and up to 34% on HarmBench, so the judge is primary.
+
+**HarmBench judge attack-success (lower = safer):** every winner beats its baseline —
+gemini 0.0 vs 1.5, llama 2.5 vs 5.0, **mistral 3.0 vs 22.5**, qwen 0.0 vs 2.5. The
+ManagerBench-tuned operating point transfers: the winners are externally safer on all
+four models, dramatically on Mistral.
+
+**XSTest over-refusal on safe prompts (lower = better):** the winners cost at most +3.6
+points vs baseline (gemini 16.0 vs 12.8; llama 10.4 vs 10.0; mistral 12.8–14.8 vs 11.2;
+qwen ~36–38 vs 36.0). Qwen is a high-refuser regardless (~36%, matching its high HA); the
+winner does not worsen it materially.
+
+So the selected prompts are externally safer at a small, bounded over-refusal cost — the
+operating point is not a ManagerBench artifact. Caveats: single LLM judge (multi-judge/
+human audit would strengthen); the judge also scores Gemini's own outputs (self-preference
+risk on Gemini's near-zero ASR only); HarmBench uses judge-ASR, not the official GPU
+classifier. Details: `results/external/external_findings.md`.

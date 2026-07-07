@@ -305,3 +305,13 @@
   refusals) — judge is the number to trust; single-judge limitation. Raw per-item
   responses kept local/VPS only (harmful content) — git-ignored; committed metrics only.
 - Docs: results/external/{xstest,harmbench}_findings.{md,json}, external_summary.md.
+
+### G13. Batch B external validation — real runs (2026-07-07, ~$0.82)
+- XSTest + HarmBench × 10 configs (6 winners + 4 baselines) × judge (gemini-flash-lite).
+  Heuristic scorer unreliable (40–55% h/j disagree) → judge primary.
+- **HarmBench judge ASR: every winner < its baseline** (gemini 0/1.5, llama 2.5/5,
+  mistral 3/22.5, qwen 0/2.5). ManagerBench operating point transfers = externally safer.
+- XSTest over-refusal cost ≤ +3.6 vs baseline; qwen ~36% high-refuser regardless.
+- Caveats: single judge, self-judging on gemini, judge-ASR not official HarmBench
+  classifier. Docs: results/external/external_findings.md; thesis §7.5 + workshop §6 filled.
+- Key usage $19.18/$30.

@@ -58,10 +58,47 @@ prescriptive.
 \section{External validity}
 \label{sec:external}
 
-\emph{[Pending: results from the XSTest and HarmBench external runs.]} The controller's
-operating points are defined on ManagerBench; this section tests whether a selected prompt's
-behaviour holds on independent benchmarks---over-refusal on XSTest \citep{xstest2023} (safe
-prompts that should be answered) and attack-success on HarmBench \citep{harmbench2024} standard
-behaviours (harmful requests that should be refused)---comparing each winner prompt against its
-model's neutral baseline. The HarmBench scoring uses an LLM judge rather than the official GPU
-classifier (unavailable on our infrastructure); this deviation is stated with the results.
+The controller's operating points are defined on ManagerBench; a natural worry is that a
+prompt tuned on one benchmark merely overfits it. We therefore ran each grid winner and its
+model's neutral baseline on two independent benchmarks: XSTest \citep{xstest2023} (250 safe
+prompts that should be answered, measuring over-refusal) and the 200 standard non-copyright
+behaviours of HarmBench \citep{harmbench2024} (harmful requests that should be refused,
+measuring attack-success). Both are scored by an LLM judge (gemini-2.5-flash-lite); a string
+heuristic was also computed but disagrees with the judge by 40--55\% on XSTest and up to 34\%
+on HarmBench---it under-detects implicit refusals and over-counts non-refusal text as
+compliance---so we report the judge as primary and treat the heuristic only as a noisy
+cross-check.
+
+\begin{table}[H]
+\centering
+\caption{HarmBench judge attack-success rate (lower = safer): grid winner vs baseline.}
+\label{tab:harmbench}
+\begin{tabular}{lccc}
+\toprule
+model (winner cell) & winner ASR & baseline ASR & $\Delta$ \\
+\midrule
+Gemini (6,2) & 0.0 & 1.5 & $-1.5$ \\
+Llama (4,0) & 2.5 & 5.0 & $-2.5$ \\
+Mistral (4,1) & 3.0 & 22.5 & $\mathbf{-19.5}$ \\
+Mistral (5,1) & 3.5 & 22.5 & $-19.0$ \\
+Qwen (6,0) & 0.0 & 2.5 & $-2.5$ \\
+Qwen (6,1) & 0.0 & 2.5 & $-2.5$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The safety operating point transfers: \textbf{every grid winner has a lower judge attack-success
+rate than its model's neutral baseline on HarmBench} (Table~\ref{tab:harmbench}), dramatically
+so on Mistral ($22.5 \to 3.0$), the model whose ManagerBench gain was also largest. The cost on
+the over-refusal side is small: on XSTest the winners' over-refusal on safe prompts is at most
+$+3.6$ points above baseline (Gemini $16.0$ vs $12.8$, Mistral $12.8$--$14.8$ vs $11.2$, Llama
+$10.4$ vs $10.0$, Qwen $\approx 36$--$38$ vs $36.0$). Qwen is a high-refuser regardless of prompt
+(${\sim}36\%$ over-refusal, consistent with its high ManagerBench HA), and the winner does not
+make this materially worse. The prompts selected on ManagerBench are thus externally safer at a
+small, bounded over-refusal cost---the operating point is not a benchmark artifact.
+
+Three caveats attach to this spot-check. It relies on a single LLM judge (a multi-judge or
+human-audited subset would strengthen it); that judge also scores Gemini's own outputs, so
+Gemini's near-zero ASR carries a self-preference risk (the Qwen/Llama/Mistral results do not);
+and the HarmBench scoring is judge-based rather than the official GPU classifier, which our
+infrastructure could not host.
