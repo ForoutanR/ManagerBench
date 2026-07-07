@@ -1,0 +1,92 @@
+\chapter{Search Damage and Repair}
+\label{ch:repair}
+
+Chapter~\ref{ch:proxybias} established that an informativeness-selected proxy mis-estimates
+full-benchmark scores. This chapter shows the consequence that makes the result matter:
+scored by that proxy, a black-box optimizer returns prompts that lose to hand-written
+baselines on every model---and repairing only the evaluation reverses the outcome.
+
+\section{The misled search}
+
+We ran 25-trial Tree-structured Parzen Estimator (TPE) optimization per model, scoring each
+candidate on the discrimination proxy of Chapter~\ref{ch:proxybias}. Three facts about these
+runs, each verified from the saved trial records, explain what went wrong. First, the intended
+warm start from the hand-crafted spectrum never executed: every run's records show zero
+warm-start trials and identical first-trial coordinates across models, i.e.\ a cold start from
+a fixed seed. Second, the two-knob space decodes to only 45 distinct prompts (a step function
+of 9 safety levels $\times$ 5 pressure levels); the 25 cold trials visited only 16--18 of the
+45 cells per model, and for two models the cell containing the true optimum was never sampled.
+Third, where the search did visit a good cell, the biased proxy mis-ranked it: on Mistral, the
+truly-best cell (full-benchmark MB 57.3) scored 41.8--44.3 on the proxy, while the empty-prompt
+cell (true MB 37.1) scored an inflated 62.9.
+
+The result is that the optimizer's returned optima lose to each model's best hand-crafted
+prompt on all four models (Table~\ref{tab:repair}). Worse, by decode identity, three of the
+four returned prompts are byte-for-byte identical to existing spectrum prompts; their apparent
+gains over those variants were re-measurement noise (re-running an identical prompt moves HA by
+up to 4.7 points and CP by up to 5.6).
+
+\section{The repair}
+
+We changed only the evaluation, not the model, the space, or the optimizer family:
+(i)~representative (difficulty-stratified) proxy selection; (ii)~a scoring convention counting
+unparseable answers as wrong, matching the full benchmark (the live evaluator had previously
+excluded them, a second source of over-estimation); and (iii), because the space is only 45
+cells, an exhaustive sweep of every cell on every model. The grid cost \$4.64 in total API
+spend (\$0.026 per cell), was checkpointed after every cell to survive connection blackouts,
+and completed without incident.
+
+\section{Validated winners}
+
+For each model we validated the grid's argmax cell(s) on the full benchmark.
+
+\begin{table}[H]
+\centering
+\caption{Full-benchmark MB: hand-crafted vs biased-proxy BO vs repaired pipeline.}
+\label{tab:repair}
+\begin{tabular}{lcccc}
+\toprule
+model & best hand-crafted & biased-proxy BO & repaired winner & $\Delta$ \\
+\midrule
+Qwen3-32B & 76.4 & 71.3 & \textbf{82.5} (HA 86.8 / CP 78.7) & \textbf{+6.1} \\
+Gemini-Flash-Lite & 66.4 & 54.2 & \textbf{70.3} (74.8 / 66.4) & \textbf{+3.9} \\
+Mistral-Small & 57.3 & 37.1 & \textbf{74.0} (74.5 / 73.5) & \textbf{+16.7} \\
+Llama-3.3-70B & 78.0 & 67.5 & 75.2 (81.2 / 70.0) & $-2.8$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The repaired pipeline beats the best hand-crafted prompt on three of four models, by $+3.9$ to
+$+16.7$ MB, and against the biased-proxy BO it gains $+7.7$ to $+36.9$. On Llama it falls 2.8
+short: Llama's true optimum is itself a hand-crafted cell, the grid's top-two cells bracket it,
+but the single proxy-argmax pick landed just below---the reason we recommend validating the
+top-$k$ cells rather than only the top one. Every winning prompt occupies the same region---a
+clear safety instruction with \emph{no or light} goal pressure---that neither the hand-crafted
+spectrum (whose safety tiers were all tested under strong pressure) nor the biased search ever
+sampled.
+
+Two supporting measurements confirm the winners are trustworthy. The stratified proxy tracks
+the full benchmark \emph{live}: on the 11 cells per model with both measurements, HA MAE is
+2.2--3.3 and CP MAE 1.8--4.3 ($r \geq 0.99$), and the winner cells' proxy-to-full gaps are
+0.2--5.2 MB. And three fresh proxy re-runs of each winner give a win-or-tie against the model's
+best hand-crafted prompt of 3/3 on all three winning models (0/3 on Llama, consistent), with a
+replication standard deviation of at most 2.8 MB.
+
+\section{Is the optimizer even necessary?}
+
+Because we measured the whole grid, we can ask what any optimizer would have achieved by
+replaying it: draw noisy observations ($\sigma=3$, matching the ${\sim}90$-item binomial noise)
+from the measured cells and report simple regret against the true grid optimum. Random search
+is a strong baseline in a 45-cell space (regret $\leq 1.6$ MB at 30 evaluations on every
+model); GP-BO helps decisively only where the good region is narrow (Llama: regret 0.7 at 15
+evaluations versus 3.9 for random); UCB1 is uniformly mediocre. The efficiency of this pipeline
+comes from the cheap, trustworthy proxy, not from optimizer sophistication---and a neural-bandit
+optimizer, the primary method of the original proposal, cannot be justified at this scale.
+
+\section{The claim}
+
+The same benchmark, the same class of optimizer, and the same order of API budget produce
+opposite verdicts depending only on how the cheap evaluation subset is chosen: under
+informativeness selection the optimizer loses to hand-writing on 4/4 models; under
+representative selection it wins on 3/4. \textbf{Proxy design does not merely distort reported
+numbers---it can flip the sign of the optimization result.}

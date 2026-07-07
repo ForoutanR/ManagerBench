@@ -1,0 +1,112 @@
+\chapter{How Prompts Move Each Model}
+\label{ch:char}
+
+Having established a trustworthy way to measure prompts (Chapter~\ref{ch:proxybias}) and used
+it to find good ones (Chapter~\ref{ch:repair}), we characterize \emph{how} the two knobs move
+each model. The exhaustive grid lets us report clean marginals rather than the confounded
+trial-correlations of an adaptively-sampled search.
+
+\section{One universal lever, one that mostly costs safety}
+
+Averaging over the other axis, one step up the safety scale raises Harm Avoidance by about
+$+12$ points on every model, at a Control-Pragmatism cost of $-7$ to $-12$. One step up the
+goal-pressure scale \emph{lowers} HA by 3 to 6 points while buying only $+1.5$ to $+3.9$ CP
+(Figure~\ref{fig:marginals}). The safety knob is a reliable, universal control on harm
+avoidance; goal pressure is largely a safety eroder whose pragmatism benefit is small.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\textwidth]{F3_grid_marginals.png}
+\caption{Grid marginals: HA rises with the safety bin on all models; goal pressure erodes HA
+and nudges CP. Computed on the exhaustive 45-cell grid.}
+\label{fig:marginals}
+\end{figure}
+
+The controlled dose--response at neutral safety framing (Table~\ref{tab:dose}) makes the
+asymmetry concrete. Increasing pressure from none to strong costs 52 points of HA on Llama and
+7.5 on Gemini, while CP rises materially ($+15.8$) only on Llama---the one model with CP
+headroom at neutral framing ($81 \to 97$); the others already sit at 96--99. The common recipe
+``add goal pressure to make the agent more effective'' is a poor trade almost everywhere.
+
+\begin{table}[H]
+\centering
+\caption{Goal-pressure dose--response at neutral safety (same items).}
+\label{tab:dose}
+\begin{tabular}{lcc}
+\toprule
+model & HA: none $\to$ med $\to$ strong & CP: none $\to$ med $\to$ strong \\
+\midrule
+Llama & $74.8 \to 54.3 \to 23.0$ & $81.4 \to 88.9 \to 97.2$ \\
+Mistral & $21.6 \to 12.9 \to 0.8$ & $96.0 \to 98.4 \to 100.0$ \\
+Gemini & $8.1 \to 3.4 \to 0.6$ & $99.2 \to 98.8 \to 100.0$ \\
+Qwen & $23.5 \to 9.0 \to 12.3$ & $98.0 \to 98.0 \to 98.6$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+An earlier version of this project, using trial-correlations from the biased-proxy runs,
+reported that goal pressure ``drives pragmatism on Llama but is inert on Mistral.'' That claim
+does not survive: on unbiased full-benchmark data the correlation even flips sign, and the
+dose--response shows Mistral's HA drops 21 points under pressure---its CP is merely at a
+ceiling. The apparent inertness was a ceiling effect plus a confounded estimator, a direct
+example of why Chapter~\ref{ch:proxybias}'s correction matters for the science.
+
+\section{The ROC lens: steerability is discrimination quality}
+
+The two metrics are best understood together as an operating point on a classifier. Read the
+model as assigning each dilemma a latent risk and refusing above a threshold: HA is the
+true-positive refusal rate on harmful items, CP is one minus the false-refusal rate on benign
+items. Then the measured frontier is the model's \emph{ROC curve for harm discrimination},
+hypervolume is its area-under-curve analogue, and a prompt selects a threshold along a fixed
+curve. This explains why a single safety lever moves HA and CP in opposite directions: it is
+one dial, the threshold. It also reframes steerability: a model holding high CP under a strict
+HA floor (Qwen: CP 92 at $\HA \geq 50$) has better underlying separation of harmful from
+benign items than one that collapses (Mistral); prompting cannot improve the curve, only choose
+where to sit on it.
+
+\section{What transfers and what does not}
+
+\paragraph{Stakes wording (transfers).} ManagerBench's benefit and harm percentages are text
+substituted into otherwise identical items, so a sweep over them tests sensitivity to the
+\emph{stated magnitude} of stakes, not different questions. The grid winners move by at most 3.3
+MB across the four benefit/harm slices.
+
+\paragraph{Items (transfers).} Splitting each metric's item pool into two disjoint random halves
+and re-scoring every configuration gives agreement $r \geq 0.989$ (MAE $\leq 2.8$) on all four
+models: a prompt's operating point is a property of the prompt, not the item sample.
+
+\paragraph{Models (does not transfer).} Prompts do not port across models. Qwen's strong-safety
+prompt drives Llama to HA 100 / CP 14.6; Llama's weak-safety prompt drives every other model to
+HA 3--13 / CP ${\approx}98$. Per-model tuning is required.
+
+\section{Levels are not semantics (a negative result)}
+
+The knobs are interpretable, but their strength is limited by a wording-sensitivity result we
+state prominently. We wrote three human paraphrases of each winner's safety sentence, each
+intended to preserve its semantic level, and re-evaluated the winners. The operating point
+moved by whole tiers on three of four models: on Gemini a balanced 70/71 prompt became a
+near-total refuser (97/6) under a level-preserving rewrite (CP $-37$ to $-65$); Mistral's HA
+moved $-13$ to $-28$; Qwen's CP up to $-33$; only Llama was stable (within $\pm 8$). These
+shifts exceed the distance between adjacent safety levels, so this is surface-form sensitivity,
+not level drift. The knob abstraction therefore indexes \emph{specific template strings}, and
+every guarantee in this thesis attaches to those frozen strings. As a standalone finding it is a
+caution for practice: prompt-based safety steering is wording-fragile, and a deployment must
+freeze and regression-test the exact prompt text.
+
+\section{Frontiers, hypervolume, and operating points}
+
+Collecting each model's measured configurations in the $(\HA, \CP)$ plane yields a clear
+empirical frontier (Figure~\ref{fig:fronts}). On the exhaustive grid the hypervolume ordering
+(reference $(0,0)$, maximum 10{,}000) is Qwen 8{,}320 $>$ Llama 7{,}511 $>$ Gemini 6{,}909 $>$
+Mistral 6{,}823. Notably, Mistral's exhaustive-grid hypervolume (6{,}823) far exceeds the
+5{,}255 obtained from the hand-crafted spectrum alone: its ``poor steerability'' in earlier
+reporting was an artifact of the spectrum never sampling its good region (moderate safety, light
+pressure)---exactly the region Chapter~\ref{ch:repair}'s winners occupy.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{F9_grid_heatmaps.png}
+\caption{Exhaustive 45-cell landscapes (HA, CP, MB) per model. The safety-bin frontier
+(HA$\uparrow$/CP$\downarrow$) is visible in every panel.}
+\label{fig:fronts}
+\end{figure}

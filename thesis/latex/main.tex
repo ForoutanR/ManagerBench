@@ -1,0 +1,96 @@
+\documentclass[11pt,a4paper,oneside]{report}
+
+% --- packages ---
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{amsmath,amssymb}
+\usepackage{caption}
+\usepackage{float}
+\usepackage[round,authoryear]{natbib}
+\usepackage[hidelinks]{hyperref}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+
+\graphicspath{{../../paper/figures/}}
+
+% pretty table columns
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+
+% draft note macro
+\newcommand{\draftnote}[1]{\marginpar{\footnotesize\color{red}#1}}
+\newcommand{\HA}{\text{HA}}
+\newcommand{\CP}{\text{CP}}
+\newcommand{\MB}{\text{MB}}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\leftmark}
+\fancyhead[R]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+\title{\textbf{Steering the Safety--Pragmatism Trade-off of\\ Autonomous LLMs by Prompt Optimization}\\[0.4em]
+{\large Why the Cheap Evaluation Is Part of the Optimizer}}
+\author{Foroutan Rahmani}
+\date{Draft --- \today}
+
+\begin{document}
+
+% ===================== FRONT MATTER =====================
+\begin{titlepage}
+\centering
+\vspace*{2cm}
+{\LARGE\bfseries Steering the Safety--Pragmatism Trade-off of Autonomous LLMs by Prompt Optimization\par}
+\vspace{0.5cm}
+{\large Why the Cheap Evaluation Is Part of the Optimizer\par}
+\vspace{2cm}
+{\large Foroutan Rahmani\par}
+\vspace{0.5cm}
+{\normalsize B.Eng. Thesis --- Computer Engineering\par}
+\vspace{0.3cm}
+{\normalsize Baha'i Institute for Higher Education (BIHE)\par}
+\vspace{0.3cm}
+{\normalsize Supervisor: Shahrad Mohammadzadeh\par}
+\vfill
+{\normalsize Draft compiled \today\par}
+\end{titlepage}
+
+\pagenumbering{roman}
+
+\chapter*{Abstract}
+\addcontentsline{toc}{chapter}{Abstract}
+\input{abstract}
+
+\tableofcontents
+\listoffigures
+\listoftables
+
+\cleardoublepage
+\pagenumbering{arabic}
+
+% ===================== CHAPTERS =====================
+\input{ch1_introduction}
+\input{ch2_background}   % stub
+\input{ch3_method}       % stub
+\input{ch4_proxy_bias}
+\input{ch5_search_damage_repair}
+\input{ch6_characterization}
+\input{ch7_controller}
+\input{ch8_related_work} % stub
+\input{ch9_discussion}
+\input{ch10_conclusion}  % stub
+
+% ===================== BACK MATTER =====================
+\bibliographystyle{plainnat}
+\bibliography{refs}
+
+\appendix
+\input{appendices}       % stub
+
+\end{document}

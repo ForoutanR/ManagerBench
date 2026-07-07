@@ -1,0 +1,31 @@
+Autonomous language-model agents must trade harm avoidance against operational
+pragmatism: under goal pressure they either take harmful-but-effective actions or become
+uselessly over-cautious. This thesis asks whether a fixed model can be placed at a chosen
+point on this trade-off purely by optimizing its system prompt, cheaply and with a
+statistical guarantee, on the ManagerBench benchmark. We cast prompt design as black-box
+optimization over two interpretable knobs---a safety-framing weight and a goal-pressure
+level---decoded to a system prompt by a template that, in practice, discretizes the space
+into 45 distinct prompts.
+
+The central finding concerns the cheap evaluation that such optimization depends on.
+Scoring candidate prompts on the intuitive ``most-informative-items'' subset---and on the
+decision-boundary selections used by recent performance-guided methods---is a
+\emph{biased} estimator of the full benchmark: the bias is configuration-conditional
+(no calibration removes it) and, sitting inside the search loop, steers Bayesian
+optimization to prompts that \emph{lose} to the best hand-written prompt on all four
+models tested, three of them decoding to byte-identical copies of existing prompts.
+Repairing only the evaluation---representative sampling plus an exhaustive sweep of the
+45-cell space, at \$4.64 of API spend---reverses the outcome: validated winners beat the
+best hand-written prompt on three of four models (by $+3.9$ to $+16.7$ MB points), all in
+a safety-framing-without-strong-pressure region no baseline had sampled. Proxy design
+alone flips the sign of the optimization result.
+
+We characterize the trade-off through a classifier/ROC lens (prompts move a decision
+threshold along a fixed harm-discrimination curve; hypervolume is its AUC analogue),
+report the safety knob as a universal lever and goal pressure as chiefly a safety eroder,
+and document a negative result---prompt steering is fragile to the exact wording of the
+safety sentence. Finally we invert the measured map into a controller that, given a
+requested operating point, returns a prompt with a distribution-free split-conformal
+interval on the achieved point (empirical coverage 82\% vs 81\% nominal) and a closed-loop
+verification that hit a live target within 2.1 points, packaged as a small demonstration
+tool.

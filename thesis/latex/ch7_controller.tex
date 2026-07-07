@@ -1,0 +1,67 @@
+\chapter{The Controller: From Description to Prescription}
+\label{ch:controller}
+
+The preceding chapters describe \emph{where} a model sits and \emph{how} prompts move it. This
+chapter inverts that map into a deployment tool: the practitioner names a required operating
+point, and the system returns a prompt that achieves it---with a distribution-free guarantee, or
+an honest signal that the point is unreachable.
+
+\section{The inverse map}
+
+The forward map from a prompt cell to its measured $(\HA,\CP)$ is predictable enough to invert.
+Given a target $(\HA^\star,\CP^\star)$, the controller predicts each of the 45 cells' operating
+point---using the full-benchmark measurement where one exists, otherwise inverse-distance
+interpolation over the measured cells' centres---and returns the cell whose predicted point is
+nearest the target, decoded to its prompt. The search is over the 45 discrete cells, not the
+continuous box: an earlier continuous formulation returned coordinates that crossed a template
+bin boundary and decoded to a different, much safer prompt than intended (predicted HA 54 / CP
+90, measured 86 / 69), a bug that vanishes once prediction and inversion both respect the cells.
+Off-frontier targets are reported infeasible with the nearest achievable point.
+
+\section{Distribution-free guarantees by split conformal prediction}
+
+A point prediction is not enough for a safety deployment. We attach a split-conformal interval.
+Calibrating on the per-model residuals $|\text{full}-\text{proxy}|$ over the cells with both
+measurements ($n=11$ per model), the 90\% half-widths are HA $\pm 6.1$ to $\pm 9.4$ and CP
+$\pm 5.5$ to $\pm 10.6$. A leave-one-out check gives joint empirical coverage of 82\% against
+the nominal 81\% (the product of two 90\% marginals), so the intervals are calibrated. They are
+conservative because $n=11$ forces the conformal quantile to the maximum residual, and
+mid-frontier cells occasionally strain them; both are honest consequences of a small
+calibration set. To our knowledge this is the first prompt controller for a safety operating
+point that ships with a distribution-free guarantee.
+
+\section{Closed-loop verification}
+
+When a tighter guarantee is required, the controller verifies against the live model: seed from
+the inverse map, measure the seed cell on the proxy, and if the measured error exceeds a
+tolerance $\varepsilon$, search neighbouring cells, keeping the best measured point. A live
+demonstration on Qwen (target HA 88 / CP 75, $\varepsilon=5$) seeded at the wrong tier (error
+20.6), corrected across cell neighbours, and reached the cell measured at HA 86.7 / CP 76.7
+(error 2.1) in 14 evaluations (${\sim}\$0.6$). The cell it converged to is the same one that
+Chapter~\ref{ch:repair}'s full-benchmark validation independently measured at 86.8 / 78.7,
+closing the loop between controller and ground-truth grid.
+
+\section{The demo tool}
+
+The controller is packaged as a small command-line tool (offline, zero-cost) for the thesis
+defence and for practitioners. The user supplies two floors---a minimum Harm Avoidance and a
+minimum Control Pragmatism---and a risk budget (default 10\%, i.e.\ the 90\% conformal lower
+bounds must clear both floors). The tool returns the highest-MB prompt that guarantees both
+floors at that risk level, printing the exact prompt text, the guaranteed lower bounds, and
+whether the prediction rests on a full-benchmark or proxy measurement; if no prompt can
+guarantee the request it reports \textsc{infeasible} with the nearest achievable point. A Qwen
+request for $\HA \geq 80$, $\CP \geq 65$ returns the careful-tier no-pressure prompt with
+guaranteed floors HA $\geq 82.9$, CP $\geq 66.4$; a Gemini request for $\HA \geq 90$ and
+$\CP \geq 90$ is correctly reported infeasible. This converts the study from descriptive to
+prescriptive.
+
+\section{External validity}
+\label{sec:external}
+
+\emph{[Pending: results from the XSTest and HarmBench external runs.]} The controller's
+operating points are defined on ManagerBench; this section tests whether a selected prompt's
+behaviour holds on independent benchmarks---over-refusal on XSTest \citep{xstest2023} (safe
+prompts that should be answered) and attack-success on HarmBench \citep{harmbench2024} standard
+behaviours (harmful requests that should be refused)---comparing each winner prompt against its
+model's neutral baseline. The HarmBench scoring uses an LLM judge rather than the official GPU
+classifier (unavailable on our infrastructure); this deviation is stated with the results.

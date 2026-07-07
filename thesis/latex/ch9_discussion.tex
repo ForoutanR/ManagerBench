@@ -1,0 +1,75 @@
+\chapter{Discussion, Limitations, and Future Work}
+\label{ch:discussion}
+
+\section{What the results mean}
+
+The through-line of this thesis is a single, somewhat uncomfortable claim: for safety-relevant
+prompt optimization, the cheap evaluation subset is part of the optimizer, not a neutral
+measurement of it. The same benchmark, optimizer class, and budget produce opposite conclusions
+depending only on how the subset is chosen. The failure comes from the most natural selection
+rule in the field (keep the informative items) and recurs in the decision-boundary component of
+current performance-guided methods. Because the objective here is precisely a model's harm
+behaviour, a silent bias in the evaluation is a safety-relevant defect that can certify the
+wrong prompt.
+
+The positive results are equally a story about measurement. Once the evaluation is
+representative and, at this scale, exhaustive, the same pipeline finds prompts that beat careful
+hand-writing on three of four models, in a region hand-tuning never explored; a model that
+looked barely steerable turns out to have been under-sampled; and the map is regular enough to
+invert into a controller with a distribution-free guarantee. None of this required a more
+sophisticated optimizer---a replay comparison shows random search is competitive in a 45-cell
+space---only a trustworthy proxy.
+
+\section{Limitations}
+
+\begin{itemize}
+\item \textbf{Scope.} Four mid-sized hosted models, one benchmark, one decode template. Findings
+are about the \emph{method} and \emph{per-model} behaviour, not a universal prompt.
+\item \textbf{A small, discrete space.} The 45-cell decode makes exhaustive measurement possible
+but the search problem easy, so optimizer-efficiency claims are modest by construction; larger or
+learned spaces re-open the search question our replay closes here.
+\item \textbf{Wording fragility.} The knobs index specific template strings, not paraphrase
+classes: level-preserving rewrites shift the operating point by whole tiers on three of four
+models. Every guarantee attaches to the frozen strings.
+\item \textbf{Cold-start proxy.} Representative selection needs per-item difficulty estimates,
+i.e.\ some prior full-benchmark responses; a brand-new model must be bootstrapped at real cost.
+\item \textbf{Statistical caution.} The conformal calibration uses only 11 cells per model,
+forcing conservative intervals that mid-frontier configurations occasionally exceed; the noise
+floor (identical prompts re-measuring within $\Delta\HA \approx 4.7$) bounds single-point claims;
+and the Llama result shows a single proxy-argmax pick can miss a near-tied optimum.
+\item \textbf{External validity.} The operating points are defined on ManagerBench; the external
+checks (\S\ref{sec:external}) test only selected prompts, with LLM-judge HarmBench scoring.
+\end{itemize}
+
+\section{Future work}
+
+The natural next step follows from the classifier/threshold lens of Chapter~\ref{ch:char}. If a
+prompt selects a threshold on a fixed harm-discrimination curve, the way to improve deployments
+is to (i)~enlarge the prompt space along axes the two knobs cannot express---tone, role, output
+format, and paraphrase variants treated as an explicit robustness dimension---and (ii)~trace the
+resulting, no-longer-enumerable frontier with genuine multi-objective Bayesian optimization. The
+right tool is a hypervolume-greedy, noise-aware acquisition such as qNEHVI
+\citep{daulton2020ehvi} (observation noise set to the measured proxy variance), falling back to
+random-scalarization ParEGO where dependencies must stay light; the stratified proxy, top-$k$
+full-benchmark validation, and conformal wrapping carry over unchanged. Two further directions:
+testing whether prompt-induced threshold shifts transfer to an external agentic benchmark
+\citep{odcvbench2025}, upgrading external validity from a spot-check to a claim; and a
+preference-conditioned controller \citep{panacea2024} that amortizes the inverse map into a
+single learned function from requested trade-off to prompt, of which the present non-parametric
+controller is the tabular special case. Finally, the cold-start limitation invites a
+multi-fidelity bootstrap: spend a small full-benchmark budget to seed the difficulty estimates a
+representative proxy needs, then run cheaply thereafter.
+
+\section{A note on the proposal}
+
+The approved proposal framed the task as constrained optimization with a neural-bandit
+optimizer, an external harm benchmark as the constraint, and a local white-box model. The
+core---budgeted black-box prompt optimization on ManagerBench with Pareto reporting and a
+selected operating point---is delivered, and its budgeted-evaluation component became the main
+contribution. Three deviations are argued from evidence: the neural bandit is unjustifiable in a
+45-cell space where random search is competitive (the comparison is delivered by replay); the
+internal HA metric plays the constraint role more faithfully than an external benchmark, since
+ManagerBench items are genuine dilemmas without a single correct answer, with an optional
+external HarmBench spot-check retained; and no GPU was available for a local white-box model, so
+all experiments are black-box via API---the realistic deployment setting. Appendix~\ref{app:proposal}
+records the full mapping.

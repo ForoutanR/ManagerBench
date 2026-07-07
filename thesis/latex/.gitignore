@@ -1,0 +1,13 @@
+*.aux
+*.log
+*.bbl
+*.blg
+*.out
+*.toc
+*.lof
+*.lot
+b1.log
+b2.log
+b3.log
+bib.log
+build*.log
