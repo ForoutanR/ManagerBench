@@ -236,3 +236,72 @@
   (variance ≫ stratified > random); magnitudes match the audit's 14-config figures.
   proxy_selection_findings_v2.{md,json} regenerated.
 - T9 (figures) gated on Fable's doc edits (COMPLETE_REPORT §19) + user go-ahead; not run.
+
+### G9. Novelty analyses B/C/D ($0 replay, 2026-07-02 evening)
+- **B ✅ boundary-principle ablation:** IPOMP-style boundary selection reproduces the
+  discrimination bias (MB MAE 13.2 ≈ variance 12.9); poisons coverage-clustering when
+  combined (3.0→10.9). Coverage-clustering alone unbiased, beats stratified (3.0 vs
+  4.2) — candidate future default. Cite as principle-level ablation, not full IPOMP.
+- **C ❌→✅ shrinkage-law hypothesis rejected** (α≈1 all strategies): bias is
+  config-conditional, hence NOT repairable by global affine calibration (12.9→9.6
+  only). Strengthens "fix selection, not scores".
+- **D ✅ held-out item split:** operating points stable across disjoint item halves
+  (r≥0.989, MAE≤2.8, all models). Kills the correlated-slices objection in-benchmark.
+- Docs: results/optimization/novelty_analyses.md; report §17/§20 updated.
+- **A (conformal controller) pending grid completion.**
+
+### G10. Grid + validation + replay + conformal (2026-07-03, package execution)
+- **45-cell grid LIVE ✅** 4 models × 45 cells × 180-item stratified proxy, $4.64,
+  checkpointed, zero incidents. results/grid/grid_*.json.
+- **Live calibration ✅** proxy↔full on 11 known cells/model: HA MAE 2.2–3.3 — replaces
+  the vacuous n=4 2d correlation.
+- **Winner validation ✅ (~$0.9): corrected pipeline beats best hand-crafted 3/4** —
+  qwen 82.5 (+6.1), gemini 70.3 (+3.9), mistral 74.0 (+16.7); llama 75.2 (−2.8, grid
+  top-2 brackets true optimum = hand-crafted cell; top-k lesson). vs old biased-BO:
+  +11.2/+7.7/+16.1/+36.9. All winners in safety-without-strong-pressure region nobody
+  sampled. Sign of the optimization result flipped by proxy design alone.
+- **Conformal controller ✅ ($0)** 90% half-widths HA ±6.1–9.4 / CP ±5.5–10.6 (n=11);
+  LOO joint coverage 82% ≈ 81% nominal. Controller ships prompt + interval.
+- **Replay optimizer comparison ✅ ($0)** GP-BO strong only where good region narrow
+  (llama regret 0.7@15 vs random 3.9); random competitive on qwen/gemini; UCB1 mediocre.
+  E2 satisfied; INSTINCT descope now data-backed.
+- **Mistral steerability re-graded:** exhaustive HV 6,823 vs sampled 5,255 — old "barely
+  steerable" verdict was a spectrum-coverage artifact.
+- Spend: package $5.53+controller-hit of approved $10 (key total ~$13.65 of $30).
+- Docs: grid_findings.md (verdict table), COMPLETE_REPORT §15 addendum, paper abstract +
+  §5.3 updated. Controller live verified-hit demo launched (controller_hit.log).
+
+### G11. Verified controller hit ✅ (2026-07-03)
+- Live closed-loop, cell controller + stratified proxy, qwen target (HA 88, CP 75, ε=5):
+  seed (7,3) 20.6 → r0 best (6,2) 13.9 → r1 (6,1) **err 2.13** (measured 86.7/76.7).
+  14 cell evals, ≈$0.64, ~50 min. Hit cell = grid winner (6,1), full-bench 86.8/78.7 —
+  proxy/full agree within noise. Log: results/optimization/controller_hit.log.
+- Handoff item "clean-hit demo NOT yet achieved" — closed.
+- **Package final: $6.18 spent of $10 approved** (key $14.29/$30). All package items
+  delivered: grid, validation, conformal, replay, verified hit.
+
+### G12. Rigor batch, items 1+4 (2026-07-04, ~$1.1)
+- **Replication ×3 ✅** win-or-tie 3/3 for every winner vs best-hand (qwen×2, gemini,
+  mistral×2); llama 0/3 (consistent). σ(MB) ≤2.8. Headline stable. rigor_batch.json.
+- **Paraphrase ⚠️ NEGATIVE (important):** level-preserving rewrites move operating
+  points whole tiers on 3/4 models (gemini 70/71→97/6!). Levels ≠ semantics; guarantees
+  attach to frozen template strings; prompt safety steering is wording-fragile. Llama
+  uniquely stable. rigor_findings.md; paper §5+§8 + report §32 updated.
+- Conformal strain noted at mid-frontier (mistral (5,3) HA −10 vs interval ±6.6).
+- Item 5 stakes sweep running.
+
+### G13. External validation — XSTest + HarmBench (2026-07-05→07, ~$6.8) ✅
+- OPUS_TASKS T12/T13. Ran the 6 grid-winner configs + 4 baseline-no-push (per model) on
+  XSTest (450) and HarmBench (200 standard non-copyright), judge-scored by
+  gemini-2.5-flash-lite. Runners: run_xstest.py / run_harmbench.py / external_eval_common.py.
+- **Bug found + fixed mid-run:** Manager_bench worker retried `while True`; a gemini
+  response with choices=None ("'NoneType' object is not subscriptable") looped 14,577×
+  (~hours stuck). Patched: return "" on empty/filtered choices, cap retries at 30
+  (commit d9e1834). Applies to all callers.
+- **Result (judge, primary):** every winner LOWERS HarmBench ASR vs its baseline
+  (Δ −1.5…−19.5; mistral 22.5→3.0) at only +0–3.6 over-refusal on XSTest safe prompts.
+  External harm-avoidance generalizes; same safety↔pragmatism trade-off holds off-bench.
+- **Caveat:** string-heuristic scorer unreliable (h↔judge disagree 17–55%; under-detects
+  refusals) — judge is the number to trust; single-judge limitation. Raw per-item
+  responses kept local/VPS only (harmful content) — git-ignored; committed metrics only.
+- Docs: results/external/{xstest,harmbench}_findings.{md,json}, external_summary.md.

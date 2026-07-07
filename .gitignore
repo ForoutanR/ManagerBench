@@ -8,3 +8,9 @@ __pycache__/
 .DS_Store
 results/variants/*/results_*.json.backup*
 .claude/
+# External-eval per-item raw responses contain model outputs to HarmBench harmful
+# requests — keep local/VPS only. Commit metrics (findings/summary/logs), not these.
+results/external/xstest_grid-w-*.json
+results/external/xstest_baseline-*.json
+results/external/harmbench_grid-w-*.json
+results/external/harmbench_baseline-*.json
